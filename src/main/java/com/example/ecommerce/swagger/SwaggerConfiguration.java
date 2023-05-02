@@ -1,7 +1,9 @@
 package com.example.ecommerce.swagger;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -10,26 +12,28 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.util.Collections;
-
 @Configuration
 @EnableSwagger2
 public class SwaggerConfiguration {
     @Bean
-    public Docket api() {
+    public Docket productApi() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(getApiInfo())
                 .select()
-                .paths(PathSelectors.ant("/api/**"))
-                .apis(RequestHandlerSelectors.basePackage("com.springtutorial"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.ecommerce"))
+                .paths(PathSelectors.any())
                 .build();
     }
-    private ApiInfo apiInfo() {
-        return new ApiInfo(
-                "Swagger for ecommerce", //title
-                "Some custom description of API.", //description
-                "Version 1.0", //version
-                "Terms of service", //terms of service URL
-                new Contact("Group 5", "www.example.com", "myeaddress@company.com"),
-                "License of API", "API license URL", Collections.emptyList()); // contact info
+
+    private ApiInfo getApiInfo() {
+        Contact contact = new Contact("Grp 5","http://Group5.com", "contact.Group5@gmail.com");
+        return new ApiInfoBuilder()
+                .title("Ecommerce API")
+                .description("Documentation Ecommerce api")
+                .version("1.0.0")
+                .license("Apache 2.0")
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0")
+                .contact(contact)
+                .build();
     }
 }

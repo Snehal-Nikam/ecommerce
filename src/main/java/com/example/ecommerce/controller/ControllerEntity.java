@@ -3,10 +3,9 @@ package com.example.ecommerce.controller;
 import com.example.ecommerce.model.Entity;
 import com.example.ecommerce.services.EntityService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/entity")
@@ -25,5 +24,10 @@ public class ControllerEntity {
 
         }
 
+    }
+
+    @GetMapping("/showAll")
+    public List<Entity> showAllEntity(){
+        return entityService.showAllCategories();
     }
 }
