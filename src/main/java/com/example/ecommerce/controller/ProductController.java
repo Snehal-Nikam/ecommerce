@@ -1,6 +1,6 @@
 package com.example.ecommerce.controller;
 
-import com.example.ecommerce.dto.product.ProductDto;
+import com.example.ecommerce.wrappers.product.ProductWrapper;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.services.CategoryService;
 import com.example.ecommerce.services.ProductService;
@@ -25,7 +25,7 @@ public class ProductController {
     CategoryService categoryService;
 
     @PostMapping("/create")
-    public ResponseEntity<ResponseUtil> create(@RequestBody ProductDto product){
+    public ResponseEntity<ResponseUtil> create(@RequestBody ProductWrapper product){
         try {
             Optional<Category> category = categoryService.getCategory(product.getCategoryId());
             if (!category.isPresent())
