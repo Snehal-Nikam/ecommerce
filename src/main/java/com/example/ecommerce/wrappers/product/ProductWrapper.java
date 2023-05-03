@@ -1,8 +1,8 @@
-package com.example.ecommerce.dto.product;
+package com.example.ecommerce.wrappers.product;
 
 import javax.validation.constraints.NotNull;
 
-public class ProductDto {
+public class ProductWrapper {
     private Integer id;
     private @NotNull String name;
     private @NotNull String imgURL;

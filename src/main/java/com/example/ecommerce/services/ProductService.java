@@ -1,6 +1,6 @@
 package com.example.ecommerce.services;
 
-import com.example.ecommerce.dto.product.ProductDto;
+import com.example.ecommerce.wrappers.product.ProductWrapper;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.model.Product;
 import com.example.ecommerce.repos.ProductRepository;
@@ -12,17 +12,17 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepo;
 
-    public void create(ProductDto productDto, Category category) {
-        Product product = getProductFromDto(productDto, category);
+    public void create(ProductWrapper productWrapper, Category category) {
+        Product product = getProductFromDto(productWrapper, category);
         productRepo.save(product);
     }
-    public static Product getProductFromDto(ProductDto productDto, Category category) {
+    public static Product getProductFromDto(ProductWrapper productWrapper, Category category) {
         Product product = new Product();
         product.setCategory(category);
-        product.setDescription(productDto.getDescription());
-        product.setImgURL(productDto.getImgURL());
-        product.setPrice(productDto.getPrice());
-        product.setProductName(productDto.getName());
+        product.setDescription(productWrapper.getDescription());
+        product.setImgURL(productWrapper.getImgURL());
+        product.setPrice(productWrapper.getPrice());
+        product.setProductName(productWrapper.getName());
         return product;
     }
 }
