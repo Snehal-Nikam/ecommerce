@@ -18,17 +18,31 @@ public class Product {
     private @NotNull double price;
     private @NotNull String imgURL;
 
+    private boolean active;
+    private int unitsInStock;
+
+    @CreationTimestamp
+    private Date dateCreated;
+
+    @UpdateTimestamp
+    private Date lastUpdated;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "entity_id", nullable = false)
+    @JoinColumn(name = "category_id", nullable = false)
     Category category;
-    public Product(String name, String imageURL, double price, String description, Category category) {
+
+
+
+    public Product(String name, String imageURL, double price, String description, Category category, boolean active, int unitsInStock) {
         super();
         this.productName = name;
         this.imgURL = imageURL;
         this.price = price;
         this.description = description;
         this.category = category;
+        this.active = active;
+        this.unitsInStock = unitsInStock;
     }
 
     public Product() {
@@ -81,5 +95,37 @@ public class Product {
 
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getUnitsInStock() {
+        return unitsInStock;
+    }
+
+    public void setUnitsInStock(int unitsInStock) {
+        this.unitsInStock = unitsInStock;
+    }
+
+    public Date getDateCreated() {
+        return dateCreated;
+    }
+
+    public void setDateCreated(Date dateCreated) {
+        this.dateCreated = dateCreated;
+    }
+
+    public Date getLastUpdated() {
+        return lastUpdated;
+    }
+
+    public void setLastUpdated(Date lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }

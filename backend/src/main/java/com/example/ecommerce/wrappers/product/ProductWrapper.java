@@ -7,6 +7,10 @@ public class ProductWrapper {
     private @NotNull String name;
     private @NotNull String imgURL;
     private @NotNull double price;
+    private @NotNull String description;
+    private @NotNull Integer categoryId;
+    private boolean active;
+    private int unitsInStock;
 
     public Integer getId() {
         return id;
@@ -56,6 +60,19 @@ public class ProductWrapper {
         this.categoryId = categoryId;
     }
 
-    private @NotNull String description;
-    private @NotNull Integer categoryId;
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public int getUnitsInStock() {
+        return unitsInStock;
+    }
+
+    public void setUnitsInStock(int unitsInStock) {
+        this.unitsInStock = unitsInStock;
+    }
 }

@@ -23,6 +23,8 @@ public class ProductService {
         product.setImgURL(productWrapper.getImgURL());
         product.setPrice(productWrapper.getPrice());
         product.setProductName(productWrapper.getName());
+        product.setActive(productWrapper.active);
+        product.setUnitsInStock(productWrapper.unitsInStock);
         return product;
     }
 }
