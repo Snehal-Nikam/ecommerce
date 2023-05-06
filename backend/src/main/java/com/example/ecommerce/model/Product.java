@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 @Entity
 @Table(name = "products")
@@ -21,11 +22,11 @@ public class Product {
     private boolean active;
     private int unitsInStock;
 
-    @CreationTimestamp
-    private Date dateCreated;
-
-    @UpdateTimestamp
-    private Date lastUpdated;
+//    @CreationTimestamp
+//    private Date dateCreated;
+//
+//    @UpdateTimestamp
+//    private Date lastUpdated;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
@@ -113,19 +114,19 @@ public class Product {
         this.unitsInStock = unitsInStock;
     }
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
-
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public Date getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(Date lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
+//    public Date getDateCreated() {
+//        return dateCreated;
+//    }
+//
+//    public void setDateCreated(Date dateCreated) {
+//        this.dateCreated = dateCreated;
+//    }
+//
+//    public Date getLastUpdated() {
+//        return lastUpdated;
+//    }
+//
+//    public void setLastUpdated(Date lastUpdated) {
+//        this.lastUpdated = lastUpdated;
+//    }
 }
