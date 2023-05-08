@@ -16,7 +16,7 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
   },
   {
-    path: "/admin/category/add",
+    path: "/seller/category/add",
     name: "CreateCategory",
     component: createCategory
   }
