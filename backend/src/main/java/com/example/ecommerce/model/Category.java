@@ -3,6 +3,7 @@ package com.example.ecommerce.model;
 import jakarta.persistence.*;
 
 import javax.validation.constraints.NotBlank;
+import java.util.Set;
 
 
 @Entity
@@ -18,9 +19,16 @@ public class Category {
 
     private @NotBlank String imgURL;
 
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL)
+    Set<Product> products;
+
     public Category(){
 
     }
+
+
+
     public Category(@NotBlank String categoryName, @NotBlank String description) {
         this.categoryName = categoryName;
         this.description = description;
@@ -68,7 +76,13 @@ public class Category {
         return imgURL;
     }
 
+    public Set<Product> getProducts() {
+        return products;
+    }
 
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
 
 
 }
