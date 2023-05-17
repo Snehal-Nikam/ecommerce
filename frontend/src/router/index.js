@@ -5,6 +5,10 @@ import Category from "@/views/category/Category.vue";
 import Admin from "@/views/Admin.vue";
 import AddProduct from "@/views/product/AddProduct.vue";
 import Product from "@/views/product/Product.vue";
+import ListProducts from "@/views/category/ListProducts.vue";
+import EditCategory from "@/views/category/EditCategory.vue";
+import ShowDetails from "@/views/product/ShowDetails.vue";
+import EditProduct from "@/views/product/EditProduct.vue";
 const routes = [
   {
     path: '/',
@@ -44,7 +48,29 @@ const routes = [
     path: '/admin/product',
     name: 'AdminProduct',
     component: Product
+  },
+  // category detail page
+  {
+    path: '/category/show/:id',
+    name: 'ListProducts',
+    component: ListProducts
+  },
+  {
+    path: '/admin/category/:id',
+    name: 'EditCategory',
+    component: EditCategory
+  },
+  {
+    path: '/product/show/:id',
+    name: 'ShowDetails',
+    component: ShowDetails
+  },
+  {
+    path: '/admin/product/:id',
+    name: 'EditProduct',
+    component: EditProduct
   }
+
 ]
 
 const router = createRouter({

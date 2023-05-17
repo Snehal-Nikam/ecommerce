@@ -24,16 +24,17 @@ export default {
     async fetchData() {
       await axios.get(this.baseURL + "/category/showAll")
           .then(res => {
-            this.categories = res.data
+            this.categories = res.data;
+            console.log("app categories :: "+ JSON.stringify(this.categories));
           }).catch(err =>{
             console.log("error : "+err);
           })
 
       await axios.get(this.baseURL + "/product/showAll")
           .then(res => {
-            this.products  = res.data
+            this.products  = res.data;
           }).catch(err =>{
-            console.log("error : "+err);
+            console.log("error from app : "+ err);
           })
     }
   },
