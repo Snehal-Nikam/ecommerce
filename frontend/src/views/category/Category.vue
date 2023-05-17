@@ -20,31 +20,23 @@
   </div>
 </template>
 <script>
-const axios = require("axios");
+//const axios = require("axios");
 import CategoryBox from "../../components/CategoryBox.vue";
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Category",
   components: { CategoryBox },
+  props : ["categories" ],
   data() {
     return {
       baseURL: "http://localhost:8090",
-      categories: [],
     };
   },
   methods: {
-    async getCategories() {
-      await axios
-          .get(`${this.baseURL}/category/showAll`)
-          .then((res) => {
-            this.categories = res.data;
-            console.log(" data :: " + JSON.stringify(res.data));
-          })
-          .catch((err) => console.log(err));
-    },
+
   },
   mounted() {
-    this.getCategories();
+    //this.getCategories();
   },
 };
 </script>
