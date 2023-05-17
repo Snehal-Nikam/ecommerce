@@ -37,7 +37,7 @@ export default {
   },
   mounted() {
     //this.getCategories();
-  },
+  }
 };
 </script>
 <style scoped></style>
