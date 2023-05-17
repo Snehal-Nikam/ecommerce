@@ -1,10 +1,47 @@
 <template>
+  <navigationBar />
   <nav>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
-  <router-view/>
+  <router-view :baseURL ="baseURL" :categories = "categories" :products="products"></router-view>
 </template>
+
+<script>
+import axios from "axios";
+import navigationBar from "@/components/NavigationBar.vue";
+export default {
+  components: { navigationBar },
+  data(){
+    return {
+      baseURL :"http://localhost:8090",
+      products :[],
+      categories : []
+
+    }
+  },
+  methods:{
+    async fetchData() {
+      await axios.get(this.baseURL + "/category/showAll")
+          .then(res => {
+            this.categories = res.data
+          }).catch(err =>{
+            console.log("error : "+err);
+          })
+
+      await axios.get(this.baseURL + "/product/showAll")
+          .then(res => {
+            this.products  = res.data
+          }).catch(err =>{
+            console.log("error : "+err);
+          })
+    }
+  },
+  mounted() {
+    this.fetchData();
+  }
+};
+</script>
 
 <style>
 #app {
