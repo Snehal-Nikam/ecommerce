@@ -30,6 +30,10 @@
 </template>
 <script>
 export default {
+<<<<<<< HEAD
+=======
+  name: "ShowDetails",
+>>>>>>> main
   data() {
     return {
       product: {},
@@ -45,8 +49,13 @@ export default {
   }
 }
 </script>
+<<<<<<< HEAD
 <style>
 .category {
   font-weight: 400;
 }
+=======
+<style scoped>
+
+>>>>>>> main
 </style>

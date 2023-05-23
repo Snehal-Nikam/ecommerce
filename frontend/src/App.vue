@@ -31,7 +31,11 @@ export default {
       await axios.get(this.baseURL + "/category/showAll")
           .then(res => {
             this.categories = res.data;
+<<<<<<< HEAD
             //console.log("app categories :: "+ JSON.stringify(this.categories));
+=======
+            console.log("app categories :: "+ JSON.stringify(this.categories));
+>>>>>>> main
           }).catch(err =>{
             console.log("error : "+err);
           })
