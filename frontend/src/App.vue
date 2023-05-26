@@ -20,7 +20,7 @@ export default {
   },
   data(){
     return {
-      baseURL :"http://localhost:8090",
+      baseURL :"http://localhost:8090/",
       products :[],
       categories : []
 
