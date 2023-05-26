@@ -28,11 +28,19 @@
           </div>
           <div class="form-group">
             <label>Image URL</label>
-            <input type="text" class="form-control" v-model="product.imageURL" required/>
+            <input type="text" class="form-control" v-model="product.imgURL" required/>
           </div>
           <div class="form-group">
             <label>Price</label>
             <input type="number" class="form-control" v-model="product.price" required/>
+          </div>
+          <div class="form-group">
+            <label>Active</label>
+            <input type="checkbox" class="form-control" v-model="product.active" required/>
+          </div>
+          <div class="form-group">
+            <label>Unites in stock</label>
+            <input type="number" class="form-control" v-model="product.unitsInStock" required/>
           </div>
           <button type="button" class="btn btn-primary"
                   @click="editProduct" >Submit</button>

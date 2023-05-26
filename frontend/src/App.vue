@@ -1,17 +1,23 @@
 <template>
   <navigationBar />
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view :baseURL ="baseURL" :categories = "categories" :products="products"></router-view>
+<!--  <nav>-->
+<!--    <router-link to="/">Home</router-link> |-->
+<!--    <router-link to="/about">About</router-link>-->
+<!--  </nav>-->
+  <router-view :baseURL ="baseURL"
+               :categories = "categories"
+               :products="products"></router-view>
 </template>
 
 <script>
+import { mapState } from 'vuex';
 import axios from "axios";
 import navigationBar from "@/components/NavigationBar.vue";
 export default {
   components: { navigationBar },
+  computed: {
+    ...mapState(['categories', 'products'])
+  },
   data(){
     return {
       baseURL :"http://localhost:8090",
@@ -38,8 +44,8 @@ export default {
           })
     }
   },
-  mounted() {
-    this.fetchData();
+  async mounted() {
+    await this.fetchData();
   }
 };
 </script>
@@ -66,3 +72,4 @@ nav a.router-link-exact-active {
   color: #42b983;
 }
 </style>
+navigationBar

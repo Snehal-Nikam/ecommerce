@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+import HomeView from '../views/Home.vue'
 import AddCategory from "@/views/category/AddCategory.vue";
 import Category from "@/views/category/Category.vue";
 import Admin from "@/views/Admin.vue";
@@ -34,6 +34,7 @@ const routes = [
     name: 'AddCategory',
     component: AddCategory
   },
+  //http://localhost:8080/admin/category
   {
     path: '/admin/category',
     name: 'AdminCategory',
@@ -49,7 +50,7 @@ const routes = [
     name: 'AdminProduct',
     component: Product
   },
-  // category detail page
+  // category detail page : http://localhost:8080/category/show/2
   {
     path: '/category/show/:id',
     name: 'ListProducts',
