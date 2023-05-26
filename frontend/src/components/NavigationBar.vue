@@ -53,7 +53,7 @@
         <a class="nav-link dropdown-toggle" href="#" id="navbarAccount" data-toggle="dropdown"> Account </a>
         <div class="dropdown-menu" aria-labelledby="navbarAccount">
           <router-link class="dropdown-item" :to="{ name : 'Signup' }" > Sign Up </router-link>
-          <router-link class="dropdown-item" :to="{ name : 'home' }" > Sign In </router-link>
+          <router-link class="dropdown-item" :to="{ name : 'Signin' }" > Sign In </router-link>
         </div>
       </li>
       </ul>

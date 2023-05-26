@@ -10,6 +10,7 @@ import EditCategory from "@/views/category/EditCategory.vue";
 import ShowDetails from "@/views/product/ShowDetails.vue";
 import EditProduct from "@/views/product/EditProduct.vue";
 import Signup from "@/views/SignupView.vue";
+import Signin from "@/views/SigninView.vue";
 
 const routes = [
   {
@@ -72,7 +73,11 @@ const routes = [
     name: 'Signup',
     component: Signup
   },
-
+  {
+    path: '/signin',
+    name: 'Signin',
+    component: Signin
+  },
   {
     path: '/admin/product/:id',
     name: 'EditProduct',
