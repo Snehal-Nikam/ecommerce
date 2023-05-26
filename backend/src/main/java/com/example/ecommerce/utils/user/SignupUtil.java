@@ -1,6 +1,6 @@
-package com.example.ecommerce.dto.user;
+package com.example.ecommerce.utils.user;
 
-public class SignupDto {
+public class SignupUtil {
 
     private String firstName;
     private String lastname;

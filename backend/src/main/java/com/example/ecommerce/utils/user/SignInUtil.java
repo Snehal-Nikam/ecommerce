@@ -1,10 +1,10 @@
-package com.example.ecommerce.dto.user;
+package com.example.ecommerce.utils.user;
 
-public class SignInDto {
+public class SignInUtil {
     private String email;
     private String password;
 
-    public SignInDto(String email, String password) {
+    public SignInUtil(String email, String password) {
         this.email = email;
         this.password = password;
     }

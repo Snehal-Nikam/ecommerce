@@ -1,9 +1,9 @@
 package com.example.ecommerce.services;
 
-import com.example.ecommerce.dto.ResponseDto;
-import com.example.ecommerce.dto.user.SignInDto;
-import com.example.ecommerce.dto.user.SignInResponseDto;
-import com.example.ecommerce.dto.user.SignupDto;
+import com.example.ecommerce.utils.ResponseUtil;
+import com.example.ecommerce.utils.user.SignInUtil;
+import com.example.ecommerce.utils.user.SignInResponseUtil;
+import com.example.ecommerce.utils.user.SignupUtil;
 import com.example.ecommerce.exceptions.AuthenticationFailException;
 import com.example.ecommerce.exceptions.CustomException;
 import com.example.ecommerce.model.AuthenticationToken;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import com.example.ecommerce.model.User;
 import java.security.NoSuchAlgorithmException;
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 @Service
@@ -29,18 +28,18 @@ public class UserService {
 
     @Transactional
 
-    public ResponseDto signUp(SignupDto signupDto) {
+    public ResponseUtil signUp(SignupUtil signupUtil) {
 //        if (Object.notNull(userRepository.findByEmail(signupDto.getEmail()))) {
 //            throw new CustomException("user already present");
 //        }
 
-        if (Objects.nonNull(userRepository.findByEmail(signupDto.getEmail()))) {
+        if (Objects.nonNull(userRepository.findByEmail(signupUtil.getEmail()))) {
             throw new CustomException("User already exist.");
         }
 
-        String encryptedpassword = signupDto.getPassword();
+        String encryptedpassword = signupUtil.getPassword();
         try {
-            encryptedpassword = hashPassword(signupDto.getPassword());
+            encryptedpassword = hashPassword(signupUtil.getPassword());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             //logger.error("hashing password failed {}", e.getMessage());
@@ -51,14 +50,14 @@ public class UserService {
 //            e.printStackTrace();
 //        }
 
-        User user = new User(signupDto.getFirstName(), signupDto.getLastname(), signupDto.getEmail(), encryptedpassword);
+        User user = new User(signupUtil.getFirstName(), signupUtil.getLastname(), signupUtil.getEmail(), encryptedpassword);
         userRepository.save(user);
 
         final AuthenticationToken authenticationToken = new AuthenticationToken(user);
         authenticationService.saveConfirmationToken(authenticationToken);
        // userRepository.findByEmail(signupDto.getEmail());
-        ResponseDto responseDto = new ResponseDto("success", "User created Successfully");
-        return  responseDto;
+        ResponseUtil ResponseUtil = new ResponseUtil("success", "User created Successfully");
+        return  ResponseUtil;
     }
 
 
@@ -70,15 +69,15 @@ public class UserService {
         return hash;
     }
 
-    public SignInResponseDto signIn(SignInDto signInDto) {
-        User user = userRepository.findByEmail(signInDto.getEmail());
+    public SignInResponseUtil signIn(SignInUtil signInUtil) {
+        User user = userRepository.findByEmail(signInUtil.getEmail());
 
         if (Objects.isNull(user)) {
             throw new AuthenticationFailException("User is not valid");
         }
 
         try {
-            if (!user.getPassword().equals(hashPassword(signInDto.getPassword()))) {
+            if (!user.getPassword().equals(hashPassword(signInUtil.getPassword()))) {
                 throw new AuthenticationFailException("Wrong password");
             }
         } catch (NoSuchAlgorithmException e) {
@@ -91,6 +90,6 @@ public class UserService {
             throw new CustomException("Token is not present.");
         }
 
-        return new SignInResponseDto("Success", token.getToken());
+        return new SignInResponseUtil("Success", token.getToken());
     }
 }

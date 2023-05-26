@@ -1,10 +1,10 @@
 package com.example.ecommerce.controller;
 
 
-import com.example.ecommerce.dto.ResponseDto;
-import com.example.ecommerce.dto.user.SignInDto;
-import com.example.ecommerce.dto.user.SignInResponseDto;
-import com.example.ecommerce.dto.user.SignupDto;
+import com.example.ecommerce.utils.ResponseUtil;
+import com.example.ecommerce.utils.user.SignInUtil;
+import com.example.ecommerce.utils.user.SignInResponseUtil;
+import com.example.ecommerce.utils.user.SignupUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,12 +20,12 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/signup")
-    public ResponseDto signup(@RequestBody SignupDto signupDto) {
-        return userService.signUp(signupDto);
+    public ResponseUtil signup(@RequestBody SignupUtil signupUtil) {
+        return userService.signUp(signupUtil);
     }
 
     @PostMapping("/signin")
-    public SignInResponseDto signIn(@RequestBody SignInDto signInDto) {
-        return userService.signIn(signInDto);
+    public SignInResponseUtil signIn(@RequestBody SignInUtil signInUtil) {
+        return userService.signIn(signInUtil);
     }
 }

@@ -1,10 +1,10 @@
-package com.example.ecommerce.dto.user;
+package com.example.ecommerce.utils.user;
 
-public class SignInResponseDto {
+public class SignInResponseUtil {
     private String status;
     private String token;
 
-    public SignInResponseDto(String status, String token) {
+    public SignInResponseUtil(String status, String token) {
         this.status = status;
         this.token = token;
     }
