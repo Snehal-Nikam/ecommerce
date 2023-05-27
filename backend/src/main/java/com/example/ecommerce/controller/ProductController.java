@@ -55,6 +55,9 @@ public class ProductController {
         try {
             if(Objects.nonNull(productService.getProduct(Id))){
                 Optional<Category> category = categoryService.getCategory(product.getCategoryId());
+                if (!category.isPresent()) {
+                    return new ResponseEntity<ResponseUtil>(new ResponseUtil(false, "category does not exists"), HttpStatus.BAD_REQUEST);
+                }
                 productService.update(Id , product, category.get());
                 return new ResponseEntity<>(new ResponseUtil(true, "Product is updated successfully"), HttpStatus.OK);
             }

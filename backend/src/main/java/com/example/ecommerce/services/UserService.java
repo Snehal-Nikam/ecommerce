@@ -56,7 +56,7 @@ public class UserService {
         final AuthenticationToken authenticationToken = new AuthenticationToken(user);
         authenticationService.saveConfirmationToken(authenticationToken);
        // userRepository.findByEmail(signupDto.getEmail());
-        ResponseUtil ResponseUtil = new ResponseUtil("success", "User created Successfully");
+        ResponseUtil ResponseUtil = new ResponseUtil(true, "User created Successfully");
         return  ResponseUtil;
     }
 

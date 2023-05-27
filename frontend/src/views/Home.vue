@@ -1,16 +1,16 @@
 <template>
   <div id="home">
-    <!-- Page Wrapper -->
-    <div id="background-div" class="page-holder bg-cover">
+<!--     Page Wrapper-->
+<!--    <div id="background-div" class="page-holder bg-cover">-->
 
-      <div class="container py-5">
-        <header class="text-left text-white py-5">
-          <h3 class="mb-4 rounded"><a href="#start-shopping" class="bg-white px-2 py-2 rounded" id="heading">Start Shopping</a></h3>
-          <p id="content" class="lead mb-0 bg-dark p-1 rounded">Simple Coding Market is for educational purposes only.
-            It can be used by developers to learn about developing an ecommerce application complete with backend and frontend for Web and Android</p>
-        </header>
-      </div>
-    </div>
+<!--      <div class="container py-5">-->
+<!--        <header class="text-left text-white py-5">-->
+<!--          <h3 class="mb-4 rounded"><a href="#start-shopping" class="bg-white px-2 py-2 rounded" id="heading">Start Shopping</a></h3>-->
+<!--          <p id="content" class="lead mb-0 bg-dark p-1 rounded">Simple Coding Market is for educational purposes only.-->
+<!--            It can be used by developers to learn about developing an ecommerce application complete with backend and frontend for Web and Android</p>-->
+<!--        </header>-->
+<!--      </div>-->
+<!--    </div>-->
 
     <div id="start-shopping" class="container">
       <div class="row">
@@ -109,7 +109,6 @@ export default {
 
   },
   async mounted() {
-
     this.getTopCategoriesAndProducts();
   },
 
