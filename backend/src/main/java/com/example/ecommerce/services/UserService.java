@@ -44,20 +44,15 @@ public class UserService {
             e.printStackTrace();
             //logger.error("hashing password failed {}", e.getMessage());
         }
-//        try {
-//            encryptedpassword = hashPassword(signupDto.getPassword());
-//        } catch (NoSuchAlgorithmException e) {
-//            e.printStackTrace();
-//        }
 
         User user = new User(signupUtil.getFirstName(), signupUtil.getLastname(), signupUtil.getEmail(), encryptedpassword);
         userRepository.save(user);
 
         final AuthenticationToken authenticationToken = new AuthenticationToken(user);
         authenticationService.saveConfirmationToken(authenticationToken);
-       // userRepository.findByEmail(signupDto.getEmail());
-        ResponseUtil ResponseUtil = new ResponseUtil("success", "User created Successfully");
-        return  ResponseUtil;
+
+        ResponseUtil responseUtil = new ResponseUtil(true, "User created Successfully");
+        return  responseUtil;
     }
 
 
