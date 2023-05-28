@@ -1,19 +1,19 @@
-package com.example.ecommerce.utils.cart;
+package com.example.ecommerce.wrappers.cart;
 
 import java.util.List;
 
-public class CartUtil {
-    private List<CartItemUtil> cartItems;
+public class CartWrapper {
+    private List<CartItemWrapper> cartItems;
     private double totalCost;
 
-    public CartUtil() {
+    public CartWrapper() {
     }
 
-    public List<CartItemUtil> getCartItems() {
+    public List<CartItemWrapper> getCartItems() {
         return cartItems;
     }
 
-    public void setCartItems(List<CartItemUtil> cartItems) {
+    public void setCartItems(List<CartItemWrapper> cartItems) {
         this.cartItems = cartItems;
     }
 

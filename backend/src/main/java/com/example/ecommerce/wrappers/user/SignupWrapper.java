@@ -1,6 +1,6 @@
-package com.example.ecommerce.utils.user;
+package com.example.ecommerce.wrappers.user;
 
-public class SignupUtil {
+public class SignupWrapper {
 
     private String firstName;
     private String lastname;

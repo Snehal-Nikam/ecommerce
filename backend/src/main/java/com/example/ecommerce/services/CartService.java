@@ -6,9 +6,9 @@ import com.example.ecommerce.model.Cart;
 import com.example.ecommerce.model.Product;
 import com.example.ecommerce.model.User;
 import com.example.ecommerce.repos.CartRepository;
-import com.example.ecommerce.utils.cart.AddToCartUtil;
-import com.example.ecommerce.utils.cart.CartUtil;
-import com.example.ecommerce.utils.cart.CartItemUtil;
+import com.example.ecommerce.wrappers.cart.AddToCartWrapper;
+import com.example.ecommerce.wrappers.cart.CartWrapper;
+import com.example.ecommerce.wrappers.cart.CartItemWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,15 +25,15 @@ public class CartService {
     @Autowired
     CartRepository cartRepository;
 
-    public void addToCart(AddToCartUtil addToCartUtil, User user) throws ProductNotExistsException {
+    public void addToCart(AddToCartWrapper addToCartWrapper, User user) throws ProductNotExistsException {
 
         // validate if the product id is valid
-        Product product = productService.getProduct(addToCartUtil.getProductId());//findById(addToCartDto.getProductId());
+        Product product = productService.getProduct(addToCartWrapper.getProductId());//findById(addToCartDto.getProductId());
 
         Cart cart = new Cart();
         cart.setProduct(product);
         cart.setUser(user);
-        cart.setQuantity(addToCartUtil.getQuantity());
+        cart.setQuantity(addToCartWrapper.getQuantity());
         cart.setCreatedDate(new Date());
 
 
@@ -42,21 +42,21 @@ public class CartService {
 
     }
 
-    public CartUtil listCartItems(User user) {
+    public CartWrapper listCartItems(User user) {
         List<Cart> cartList = cartRepository.findAllByUserOrderByCreatedDateDesc(user);
 
-        List<CartItemUtil> cartItems = new ArrayList<>();
+        List<CartItemWrapper> cartItems = new ArrayList<>();
         double totalCost = 0;
         for (Cart cart: cartList) {
-            CartItemUtil cartItemUtil = new CartItemUtil(cart);
-            totalCost += cartItemUtil.getQuantity() * cart.getProduct().getPrice();
-            cartItems.add(cartItemUtil);
+            CartItemWrapper cartItemWrapper = new CartItemWrapper(cart);
+            totalCost += cartItemWrapper.getQuantity() * cart.getProduct().getPrice();
+            cartItems.add(cartItemWrapper);
         }
 
-        CartUtil cartUtil = new CartUtil();
-        cartUtil.setTotalCost(totalCost);
-        cartUtil.setCartItems(cartItems);
-        return cartUtil;
+        CartWrapper cartWrapper = new CartWrapper();
+        cartWrapper.setTotalCost(totalCost);
+        cartWrapper.setCartItems(cartItems);
+        return cartWrapper;
     }
 
     public void deleteCartItem(Integer cartItemId, User user) {

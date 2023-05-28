@@ -5,8 +5,8 @@ import com.example.ecommerce.model.User;
 import com.example.ecommerce.services.AuthenticationService;
 import com.example.ecommerce.services.CartService;
 import com.example.ecommerce.utils.ResponseUtil;
-import com.example.ecommerce.utils.cart.AddToCartUtil;
-import com.example.ecommerce.utils.cart.CartUtil;
+import com.example.ecommerce.wrappers.cart.AddToCartWrapper;
+import com.example.ecommerce.wrappers.cart.CartWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class CartController {
 
     // post cart api
     @PostMapping("/add")
-    public ResponseEntity<ResponseUtil> addToCart(@RequestBody AddToCartUtil addToCart,
+    public ResponseEntity<ResponseUtil> addToCart(@RequestBody AddToCartWrapper addToCart,
                                                   @RequestParam("token") String token) throws ProductNotExistsException {
         // authenticate the token
         authenticationService.authenticate(token);
@@ -43,7 +43,7 @@ public class CartController {
 
     // get all cart items for a user
     @GetMapping("/")
-    public ResponseEntity<CartUtil> getCartItems(@RequestParam("token") String token) {
+    public ResponseEntity<CartWrapper> getCartItems(@RequestParam("token") String token) {
         // authenticate the token
         authenticationService.authenticate(token);
 
@@ -52,8 +52,8 @@ public class CartController {
 
         // get cart items
 
-        CartUtil cartUtil = cartService.listCartItems(user);
-        return new ResponseEntity<>(cartUtil, HttpStatus.OK);
+        CartWrapper cartWrapper = cartService.listCartItems(user);
+        return new ResponseEntity<>(cartWrapper, HttpStatus.OK);
     }
 
     // delete a cart item for a user

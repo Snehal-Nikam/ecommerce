@@ -1,13 +1,13 @@
-package com.example.ecommerce.utils.cart;
+package com.example.ecommerce.wrappers.cart;
 
 import javax.validation.constraints.NotNull;
 
-public class AddToCartUtil {
+public class AddToCartWrapper {
     private Integer id;
     private @NotNull Integer productId;
     private @NotNull Integer quantity;
 
-    public AddToCartUtil() {
+    public AddToCartWrapper() {
     }
 
     public Integer getId() {

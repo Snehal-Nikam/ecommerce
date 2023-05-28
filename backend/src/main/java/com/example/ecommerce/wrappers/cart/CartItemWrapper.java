@@ -1,16 +1,16 @@
-package com.example.ecommerce.utils.cart;
+package com.example.ecommerce.wrappers.cart;
 
 import com.example.ecommerce.model.Cart;
 import com.example.ecommerce.model.Product;
 
-public class CartItemUtil {
+public class CartItemWrapper {
     private Integer id;
     private Integer quantity;
     private Product product;
 
-    public CartItemUtil() {
+    public CartItemWrapper() {
     }
-    public CartItemUtil(Cart cart) {
+    public CartItemWrapper(Cart cart) {
         this.id = cart.getId();
         this.quantity = cart.getQuantity();
         this.setProduct(cart.getProduct());
