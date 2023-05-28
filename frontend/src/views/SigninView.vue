@@ -3,7 +3,7 @@
     <!--    Logo Div-->
     <div class="row">
       <div class="col-12 text-center pt-3">
-        <router-link :to="{ name: 'home' }">
+        <router-link :to="{ name: 'Home' }">
          <!-- <img id="logo" src="../assets/icon.png" />-->
         </router-link>
       </div>

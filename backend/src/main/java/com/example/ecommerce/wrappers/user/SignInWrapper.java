@@ -1,10 +1,10 @@
-package com.example.ecommerce.utils.user;
+package com.example.ecommerce.wrappers.user;
 
-public class SignInUtil {
+public class SignInWrapper {
     private String email;
     private String password;
 
-    public SignInUtil(String email, String password) {
+    public SignInWrapper(String email, String password) {
         this.email = email;
         this.password = password;
     }
