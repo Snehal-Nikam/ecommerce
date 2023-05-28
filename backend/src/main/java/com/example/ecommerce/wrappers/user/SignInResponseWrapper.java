@@ -1,10 +1,10 @@
-package com.example.ecommerce.utils.user;
+package com.example.ecommerce.wrappers.user;
 
-public class SignInResponseUtil {
+public class SignInResponseWrapper {
     private String status;
     private String token;
 
-    public SignInResponseUtil(String status, String token) {
+    public SignInResponseWrapper(String status, String token) {
         this.status = status;
         this.token = token;
     }

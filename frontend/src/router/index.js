@@ -11,11 +11,12 @@ import ShowDetails from "@/views/product/ShowDetails.vue";
 import EditProduct from "@/views/product/EditProduct.vue";
 import Signup from "@/views/SignupView.vue";
 import Signin from "@/views/SigninView.vue";
+import Cart from "@/views/Cart.vue";
 
 const routes = [
   {
     path: '/',
-    name: 'home',
+    name: 'Home',
     component: HomeView
   },
   {
@@ -83,6 +84,11 @@ const routes = [
     path: '/admin/product/:id',
     name: 'EditProduct',
     component: EditProduct
+  },
+  {
+    path: '/cart',
+    name: 'Cart',
+    component: Cart
   }
 
 ]

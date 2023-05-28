@@ -1,5 +1,6 @@
 package com.example.ecommerce.services;
 
+import com.example.ecommerce.exceptions.ProductNotExistsException;
 import com.example.ecommerce.wrappers.product.ProductWrapper;
 import com.example.ecommerce.model.Category;
 import com.example.ecommerce.model.Product;
@@ -30,8 +31,13 @@ public class ProductService {
         return product;
     }
 
-    public Optional<Product> getProduct(Integer productId) {
-        return productRepo.findById(productId);
+    public Product getProduct(Integer productId) throws ProductNotExistsException {
+        Optional<Product> optionalProduct = productRepo.findById(productId);
+        if (optionalProduct.isEmpty()) {
+            throw new ProductNotExistsException("product id is invalid: " + productId);
+        }
+        return optionalProduct.get();
+
     }
     public List<Product> getAllProducts(){
         return productRepo.findAll();
@@ -55,5 +61,6 @@ public class ProductService {
         product.setId(prodId);
         productRepo.save(product);
     }
+
 
 }

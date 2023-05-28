@@ -1,9 +1,9 @@
 package com.example.ecommerce.services;
 
 import com.example.ecommerce.utils.ResponseUtil;
-import com.example.ecommerce.utils.user.SignInUtil;
-import com.example.ecommerce.utils.user.SignInResponseUtil;
-import com.example.ecommerce.utils.user.SignupUtil;
+import com.example.ecommerce.wrappers.user.SignInWrapper;
+import com.example.ecommerce.wrappers.user.SignInResponseWrapper;
+import com.example.ecommerce.wrappers.user.SignupWrapper;
 import com.example.ecommerce.exceptions.AuthenticationFailException;
 import com.example.ecommerce.exceptions.CustomException;
 import com.example.ecommerce.model.AuthenticationToken;
@@ -28,31 +28,36 @@ public class UserService {
 
     @Transactional
 
-    public ResponseUtil signUp(SignupUtil signupUtil) {
+    public ResponseUtil signUp(SignupWrapper signupWrapper) {
 //        if (Object.notNull(userRepository.findByEmail(signupDto.getEmail()))) {
 //            throw new CustomException("user already present");
 //        }
 
-        if (Objects.nonNull(userRepository.findByEmail(signupUtil.getEmail()))) {
+        if (Objects.nonNull(userRepository.findByEmail(signupWrapper.getEmail()))) {
             throw new CustomException("User already exist.");
         }
 
-        String encryptedpassword = signupUtil.getPassword();
+        String encryptedpassword = signupWrapper.getPassword();
         try {
-            encryptedpassword = hashPassword(signupUtil.getPassword());
+            encryptedpassword = hashPassword(signupWrapper.getPassword());
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
             //logger.error("hashing password failed {}", e.getMessage());
         }
+//        try {
+//            encryptedpassword = hashPassword(signupDto.getPassword());
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
 
-        User user = new User(signupUtil.getFirstName(), signupUtil.getLastname(), signupUtil.getEmail(), encryptedpassword);
+        User user = new User(signupWrapper.getFirstName(), signupWrapper.getLastname(), signupWrapper.getEmail(), encryptedpassword);
         userRepository.save(user);
 
         final AuthenticationToken authenticationToken = new AuthenticationToken(user);
         authenticationService.saveConfirmationToken(authenticationToken);
-
-        ResponseUtil responseUtil = new ResponseUtil(true, "User created Successfully");
-        return  responseUtil;
+       // userRepository.findByEmail(signupDto.getEmail());
+        ResponseUtil ResponseUtil = new ResponseUtil(true, "User created Successfully");
+        return  ResponseUtil;
     }
 
 
@@ -64,15 +69,15 @@ public class UserService {
         return hash;
     }
 
-    public SignInResponseUtil signIn(SignInUtil signInUtil) {
-        User user = userRepository.findByEmail(signInUtil.getEmail());
+    public SignInResponseWrapper signIn(SignInWrapper signInWrapper) {
+        User user = userRepository.findByEmail(signInWrapper.getEmail());
 
         if (Objects.isNull(user)) {
             throw new AuthenticationFailException("User is not valid");
         }
 
         try {
-            if (!user.getPassword().equals(hashPassword(signInUtil.getPassword()))) {
+            if (!user.getPassword().equals(hashPassword(signInWrapper.getPassword()))) {
                 throw new AuthenticationFailException("Wrong password");
             }
         } catch (NoSuchAlgorithmException e) {
@@ -85,6 +90,6 @@ public class UserService {
             throw new CustomException("Token is not present.");
         }
 
-        return new SignInResponseUtil("Success", token.getToken());
+        return new SignInResponseWrapper("Success", token.getToken());
     }
 }
