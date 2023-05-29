@@ -92,7 +92,12 @@ export default {
           .then((res) => {
             localStorage.setItem("token", res.data.token);
             this.$emit("fetchData");
-            this.$router.push({ name: "home" });
+            this.$router.replace("/");
+
+            swal({
+              text: "Login Successful",
+              icon: "success",
+            });
           })
           .catch((err) => {
             swal({
