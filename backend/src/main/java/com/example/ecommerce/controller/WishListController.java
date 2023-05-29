@@ -5,8 +5,8 @@ import com.example.ecommerce.model.User;
 import com.example.ecommerce.model.WishList;
 import com.example.ecommerce.services.AuthenticationService;
 import com.example.ecommerce.services.WishListService;
-import com.example.ecommerce.utils.product.ProductUtil;
-import io.swagger.annotations.ApiResponse;
+import com.example.ecommerce.utils.ResponseUtil;
+import com.example.ecommerce.wrappers.product.ProductWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class WishListController {
     AuthenticationService authenticationService;
 
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addToWishList(@RequestBody Product product, @RequestParam("token") String token) {
+    public ResponseEntity<ResponseUtil> addToWishList(@RequestBody Product product, @RequestParam("token") String token) {
         authenticationService.authenticate(token);
 
         User user = authenticationService.getUser(token);
@@ -32,11 +32,16 @@ public class WishListController {
         WishList wishList = new WishList(user, product);
         wishListService.creatWishlist(wishList);
         //return new ResponseEntity<ApiResponse>(new ApiResponse(true, "Add to wishlist"){}, HttpStatus.CREATED);
-        ApiResponse apiResponse = new ApiResponse(true, "Added to the Wishlist.");
+        ResponseUtil apiResponse = new ResponseUtil(true, "Added to the Wishlist.");
         return new ResponseEntity<>(apiResponse, HttpStatus.CREATED);
-
+    }
         @GetMapping("/{token}")
-        public ResponseEntity<List<ProductUtil>>
+        public ResponseEntity<List<ProductWrapper>> getWishList(@PathVariable("token") String token) {
+            authenticationService.authenticate(token);
+            User user = authenticationService.getUser(token);
+            List<ProductWrapper> wishListForUser = wishListService.getWishListForUser(user);
+            return new ResponseEntity<>(wishListForUser, HttpStatus.OK);
+        }
 
     }
-}
+
