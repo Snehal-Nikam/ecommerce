@@ -69,7 +69,10 @@ import axios from 'axios';
 import swal from 'sweetalert';
 export default {
   name: "SigninView",
-  props: ["baseURL"],
+  props: ["baseURL", "previousRoute: {\n" +
+  "      type: String,\n" +
+  "      default: '/'\n" +
+  "    }"],
   data() {
     return {
       email: null,
@@ -92,9 +95,14 @@ export default {
           .then((res) => {
             localStorage.setItem("token", res.data.token);
             this.$emit("fetchData");
-            this.$router.push({ name: "home" });
+            console.log("History ** "+ this.$router.options.history.state.back);
+            //this.$router.push({ name: "Home" });
+
+            this.$router.push(this.$router.options.history.state.back);
+
           })
           .catch((err) => {
+            console.log(err);
             swal({
               text: "Unable to Log you in!",
               icon: "error",

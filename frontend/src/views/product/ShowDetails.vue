@@ -14,6 +14,20 @@
         <p>
           {{ product.description }}
         </p>
+        <div class="d-flex flex-row justify-content-between">
+          <div class="input-group col-md-3 col-4 p-0">
+            <div class="input-group-prepend">
+              <span class="input-group-text">Quantity</span>
+            </div>
+            <input type="number" class="form-control" v-model="quantity" />
+          </div>
+
+          <div class="input-group col-md-3 col-4 p-0">
+            <button class="btn" id="add-to-cart-button" @click="addToCart">
+              Add to Cart
+            </button>
+          </div>
+        </div>
         <div class="features pt-3">
           <h5><strong>Features</strong></h5>
           <ul>
@@ -29,21 +43,59 @@
   </div>
 </template>
 <script>
+const axios = require("axios");
+const alert = require("sweetalert");
 export default {
   name: "ShowDetails",
   data() {
     return {
       product: {},
-      category: {}
+      category: {},
+      quantity: 1
     }
   },
   props: ["baseURL", "products", "categories"],
+
   mounted() {
     this.id = this.$route.params.id;
     this.product = this.products.find((product) => product.id == this.id)
     this.category = this.categories.find(category =>
-        category.id == this.product.categoryId)
-  }
+        category.id == this.product.categoryId);
+    this.token = localStorage.getItem("token");
+  },
+  methods :{
+    addToCart() {
+      if (!this.token) {
+        // user is not logged in
+        // show some error
+        alert({
+          text: "please login to add item in cart",
+          icon: "error",
+        });
+        console.log("**Path : "+this.$route.fullPath);
+        this.$router.push({ name: 'Signin', query: { redirect: this.$route.fullPath } });
+        return;
+      }
+
+      // add to cart
+
+      axios
+          .post(`${this.baseURL}/cart/add?token=${this.token}`, {
+            productId: this.id,
+            quantity: this.quantity,
+          })
+          .then((res) => {
+            if (res.status == 201) {
+              alert({
+                text: "Product added in cart",
+                icon: "success",
+              });
+              this.$emit("fetchData");
+            }
+          })
+          .catch((err) => console.log("err", err));
+    }
+  },
 }
 </script>
 

@@ -25,7 +25,7 @@ public class ProductService {
         product.setDescription(productWrapper.getDescription());
         product.setImgURL(productWrapper.getImgURL());
         product.setPrice(productWrapper.getPrice());
-        product.setProductName(productWrapper.getName());
+        product.setProductName(productWrapper.getProductName());
         product.setActive(productWrapper.isActive());
         product.setUnitsInStock(productWrapper.getUnitsInStock());
         return product;
@@ -51,7 +51,7 @@ public class ProductService {
         productWrapper.setPrice(product.getPrice());
         productWrapper.setActive(product.isActive());
         productWrapper.setUnitsInStock(product.getUnitsInStock());
-        productWrapper.setName(product.getProductName());
+        productWrapper.setProductName(product.getProductName());
         productWrapper.setId(product.getId());
         return productWrapper;
     }
