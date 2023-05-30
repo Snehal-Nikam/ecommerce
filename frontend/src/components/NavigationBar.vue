@@ -1,9 +1,9 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <!-- Navbar content -->
       <!--    Logo-->
       <router-link class="navbar-brand" :to="{ name: 'Home' }">
-        <img id="logo" src="../assets/logo.png" />
+        <img id="logo" src="../assets/sitelogo.png" />
       </router-link>
       <!--    Burger Button-->
       <button
@@ -62,10 +62,10 @@
               <router-link class="dropdown-item" :to="{ name: 'Home' }"
               >Home
               </router-link>
-              <router-link class="dropdown-item" :to="{ name: 'Home' }"
+              <router-link class="dropdown-item" :to="{ name: 'Product' }"
               >Product
               </router-link>
-              <router-link class="dropdown-item" :to="{ name: 'Home' }"
+              <router-link class="dropdown-item" :to="{ name: 'Category' }"
               >Category
               </router-link>
             </div>
@@ -133,11 +133,19 @@ export default {
 </script>
 <style scoped>
 #logo {
-  width: 150px;
+  width: 50px;
   margin-left: 20px;
   margin-right: 20px;
 }
+.toplogo {
+  margin-top: 5px;
+}
+
+.toplogo img {
+  height : 10%;
+  width : 10%;
+}
 .nav-link {
-  color: rgba(255, 255, 255);
+  color: rgba(250, 250, 250);
 }
 </style>

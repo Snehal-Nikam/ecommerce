@@ -55,6 +55,16 @@ const routes = [
     name: 'AdminProduct',
     component: Product
   },
+  {
+    path: '/product',
+    name: 'Product',
+    component: Product
+  },
+  {
+    path: '/category',
+    name: 'Category',
+    component: Category
+  },
   // category detail page : http://localhost:8080/category/show/2
   {
     path: '/category/show/:id',

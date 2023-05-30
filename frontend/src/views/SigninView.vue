@@ -90,14 +90,10 @@ export default {
       await axios
           .post(`${this.baseURL}user/signin`, user)
           .then((res) => {
+            // redirect to home page
             localStorage.setItem("token", res.data.token);
             this.$emit("fetchData");
             this.$router.replace("/");
-
-            swal({
-              text: "Login Successful",
-              icon: "success",
-            });
           })
           .catch((err) => {
             swal({
