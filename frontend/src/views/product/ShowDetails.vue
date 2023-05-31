@@ -38,11 +38,14 @@
             <li>ut doloremque dolore corrupti, architecto iusto beatae.</li>
           </ul>
         </div>
+        <button id="wishlist-button" class="btn mr-3 p-1 py-0" @click="addToWishList()" > {{ wishListString }} </button>
       </div>
     </div>
   </div>
 </template>
 <script>
+import swal from "sweetalert";
+import axios from "axios";
 const axios = require("axios");
 const alert = require("sweetalert");
 export default {
@@ -51,6 +54,48 @@ export default {
     return {
       product: {},
       category: {},
+      wishListString: "Add to Wishlist",
+    };
+  },
+  props: ["baseURL", "products", "categories"],
+  methods: {
+    addToWishList() {
+      if (!this.token) {
+        swal({
+          message: "Please log in to add item in Wishlist.",
+          icon: "error",
+        });
+        return;
+      }
+      axios
+          .post(`${this.baseURL}wishlist/add?token=${this.token}`, {
+        id: this.product.id,
+      })
+          .then((res) => {
+            if (res.status === 201) {
+              this.wishListString = "Item added to Wishlist";
+              swal({
+                message: "Item added to Wishlist.",
+                icon: "success",
+              });
+            }
+          })
+          .catch((err) => {
+              console.log("err", err);
+          });
+    },
+  },
+  mounted() {
+    this.id = this.$route.params.id;
+    this.product = this.products.find((product) => product.id == this.id)
+    this.category = this.categories.find(
+        (category) => category.id == this.product.categoryId
+    );
+
+    // eslint-disable-next-line no-undef
+    this.token = localStorage,getItem("token");
+  },
+};
       quantity: 1
     }
   },
@@ -102,5 +147,9 @@ export default {
 <style scoped>
 .category {
   font-weight: 400;
+}
+
+#wishlist-button {
+  background-color: #b9b9b9;
 }
 </style>

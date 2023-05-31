@@ -93,6 +93,7 @@ export default {
       await axios
           .post(`${this.baseURL}user/signin`, user)
           .then((res) => {
+            // redirect to home page
             localStorage.setItem("token", res.data.token);
             this.$emit("fetchData");
             console.log("History ** "+ this.$router.options.history.state.back);

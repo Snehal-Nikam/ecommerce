@@ -1,27 +1,32 @@
 <template>
-  <navigationBar :cartCount="cartCount" @resetCartCount="resetCartCount"/>
+  <navigationBar
+      :cartCount="cartCount"
+      @resetCartCount="resetCartCount"
+      v-if="!['Signup', 'Signin'].includes($route.name)"
+  />
 <!--  <nav>-->
 <!--    <router-link to="/">Home</router-link> |-->
 <!--    <router-link to="/about">About</router-link>-->
 <!--  </nav>-->
-  <router-view
-      v-if="categories && products"
-      style="min-height: 60vh"
-      :baseURL="baseURL"
-      :categories="categories"
-      :products="products"
-      @fetchData="fetchData">
-
+  <div style="min-height: 60vh">
+  <router-view v-if="products && categories"
+               :baseURL ="baseURL"
+               :categories = "categories"
+               :products="products"
+               @fetchData="fetchData"
+  >
   </router-view>
-
+  </div>
+  <footer-bar v-if="!['Signup', 'Signin'].includes($route.name)" />
 </template>
 
 <script>
 import { mapState } from 'vuex';
 import axios from "axios";
 import navigationBar from "@/components/NavigationBar.vue";
+import footerBar from "@/components/FooterBar.vue"
 export default {
-  components: { navigationBar },
+  components: { footerBar, navigationBar },
   computed: {
     ...mapState(['categories', 'products'])
   },
