@@ -72,7 +72,7 @@ export default {
       totalCost: 0,
     };
   },
-  props: ["baseURL"],
+  props: ["baseURL","cartCount"],
   methods: {
     // fetch All items in cart
     listCartItems() {

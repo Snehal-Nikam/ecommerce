@@ -4,13 +4,13 @@
       <div class="col-md-1"></div>
       <!--            display image-->
       <div class="col-md-4 col-12">
-        <img :src="product.imgURL" class="img-fluid">
+        <img :src="product.imgURL" class="img-fluid" />
       </div>
       <!--            display product details-->
       <div class="col-md-6 col-12 pt-3 pt-md-0">
-        <h4>{{ product.name }}</h4>
-        <h6 class="catgory font-italic"> {{category.categoryName}}</h6>
-        <h6 class="font-weight-bold"> $ {{product.price}}</h6>
+        <h4>{{ product.productName }}</h4>
+        <h6 class="catgory font-italic">{{ category.categoryName }}</h6>
+        <h6 class="font-weight-bold">$ {{ product.price }}</h6>
         <p>
           {{ product.description }}
         </p>
@@ -23,7 +23,12 @@
           </div>
 
           <div class="input-group col-md-3 col-4 p-0">
-            <button class="btn" id="add-to-cart-button" @click="addToCart">
+            <button
+                class="btn"
+                type="button"
+                id="add-to-cart-button"
+                @click="addToCart"
+            >
               Add to Cart
             </button>
           </div>
@@ -38,77 +43,64 @@
             <li>ut doloremque dolore corrupti, architecto iusto beatae.</li>
           </ul>
         </div>
-        <button id="wishlist-button" class="btn mr-3 p-1 py-0" @click="addToWishList()" > {{ wishListString }} </button>
+        <button
+            id="wishlist-button"
+            class="btn mr-3 p-1 py-0"
+            @click="addToWishlist()"
+        >
+          {{ wishListString }}
+        </button>
       </div>
     </div>
   </div>
 </template>
 <script>
-import swal from "sweetalert";
-import axios from "axios";
 const axios = require("axios");
 const alert = require("sweetalert");
 export default {
-  name: "ShowDetails",
   data() {
     return {
       product: {},
       category: {},
-      wishListString: "Add to Wishlist",
+      quantity: 1,
+      wishListString: "Add to wishlist",
     };
   },
-  props: ["baseURL", "products", "categories"],
+  props: ["baseURL", "products", "categories", "cartCount"],
   methods: {
-    addToWishList() {
+    addToWishlist() {
       if (!this.token) {
-        swal({
-          message: "Please log in to add item in Wishlist.",
+        // user is not logged in
+        // show some error
+        alert({
+          text: "please login to add item in wishlist",
           icon: "error",
         });
+        console.log("**Path : "+this.$route.fullPath);
+        this.$router.push({ name: 'Signin', query: { redirect: this.$route.fullPath } });
         return;
       }
+      // add item to wishlist
       axios
           .post(`${this.baseURL}wishlist/add?token=${this.token}`, {
-        id: this.product.id,
-      })
+            id: this.product.id,
+          })
           .then((res) => {
             if (res.status === 201) {
-              this.wishListString = "Item added to Wishlist";
-              swal({
-                message: "Item added to Wishlist.",
+              this.wishListString = "Added to Wishlist";
+              alert({
+                text: "Added to Wishlist",
                 icon: "success",
               });
             }
           })
           .catch((err) => {
-              console.log("err", err);
+            console.log("err", err);
           });
     },
-  },
-  mounted() {
-    this.id = this.$route.params.id;
-    this.product = this.products.find((product) => product.id == this.id)
-    this.category = this.categories.find(
-        (category) => category.id == this.product.categoryId
-    );
 
-    // eslint-disable-next-line no-undef
-    this.token = localStorage,getItem("token");
-  },
-};
-      quantity: 1
-    }
-  },
-  props: ["baseURL", "products", "categories"],
+    // add to cart
 
-  mounted() {
-    this.id = this.$route.params.id;
-    this.product = this.products.find((product) => product.id == this.id)
-    this.category = this.categories.find(category =>
-        category.id == this.product.categoryId);
-    this.token = localStorage.getItem("token");
-  },
-  methods :{
     addToCart() {
       if (!this.token) {
         // user is not logged in
@@ -139,17 +131,28 @@ export default {
             }
           })
           .catch((err) => console.log("err", err));
-    }
+    },
   },
-}
+  mounted() {
+    this.id = this.$route.params.id;
+    this.product = this.products.find((product) => product.id == this.id);
+    this.category = this.categories.find(
+        (category) => category.id == this.product.categoryId
+    );
+    this.token = localStorage.getItem("token");
+  },
+};
 </script>
-
-<style scoped>
+<style>
 .category {
   font-weight: 400;
 }
 
 #wishlist-button {
   background-color: #b9b9b9;
+}
+
+#add-to-cart-button {
+  background-color: #febd69;
 }
 </style>
