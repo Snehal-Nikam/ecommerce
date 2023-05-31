@@ -87,6 +87,11 @@
 			<artifactId>springfox-swagger2</artifactId>
 			<version>3.0.0</version>
 		</dependency>
+		<dependency>
+			<groupId>com.stripe</groupId>
+			<artifactId>stripe-java</artifactId>
+			<version>20.41.0</version>
+		</dependency>
         <dependency>
             <groupId>jakarta.validation</groupId>
             <artifactId>jakarta.validation-api</artifactId>
