@@ -63,7 +63,6 @@
 
           <ion-icon name="cart-outline" v-pre></ion-icon>
         </button>
-
       </div>
       <div class="col-md-1"></div>
     </div>
@@ -85,9 +84,7 @@ export default {
       wishListString: "Add to wishlist",
     };
   },
-
   props: ["baseURL", "products", "categories", "cartCount"],
-
   methods: {
     addToWishlist() {
       if (!this.token) {
@@ -168,7 +165,6 @@ export default {
     );
   },
   },
-
   mounted() {
     this.id = this.$route.params.id;
     this.product = this.products.find((product) => product.id == this.id);
@@ -179,7 +175,7 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .category {
   font-weight: 400;
 }
@@ -209,5 +205,9 @@ input[type="number"] {
   background-color: #131921;
   color: white;
   border-radius: 0;
+}
+
+#add-to-cart-button {
+  background-color: #febd69;
 }
 </style>

@@ -4,17 +4,12 @@
       @resetCartCount="resetCartCount"
       v-if="!['Signup', 'Signin'].includes($route.name)"
   />
-<!--  <nav>-->
-<!--    <router-link to="/">Home</router-link> |-->
-<!--    <router-link to="/about">About</router-link>-->
-<!--  </nav>-->
   <div style="min-height: 60vh">
   <router-view v-if="products && categories"
                :baseURL ="baseURL"
                :categories = "categories"
                :products="products"
-               @fetchData="fetchData"
-  >
+               @fetchData="fetchData">
   </router-view>
   </div>
   <footer-bar v-if="!['Signup', 'Signin'].includes($route.name)" />
@@ -40,7 +35,7 @@ export default {
   },
   methods:{
     async fetchData() {
-      await axios.get(this.baseURL + "/category/showAll")
+      await axios.get(this.baseURL + "category/showAll")
           .then(res => {
             this.categories = res.data;
             console.log("app categories :: "+ JSON.stringify(this.categories));
@@ -48,19 +43,21 @@ export default {
             console.log("error : "+err);
           })
 
-      await axios.get(this.baseURL + "/product/showAll")
+      await axios.get(this.baseURL + "product/showAll")
           .then(res => {
             this.products  = res.data;
           }).catch(err =>{
             console.log("error from app : "+ err);
           })
-
+      console.log("token :: "+this.token);
       if (this.token) {
         axios
-            .get(`${this.baseURL}/cart?token=${this.token}`)
+            .get(`${this.baseURL}cart/?token=${this.token}`)
             .then((res) => {
+              console.log("fetch data start:: "+ this.cartCount);
               const result = res.data;
               this.cartCount = result.cartItems.length;
+              console.log("fetch data end:: "+ this.cartCount);
             })
             .catch((err) => console.log("err", err));
       }
@@ -71,7 +68,7 @@ export default {
   },
   async mounted() {
     this.token = localStorage.getItem("token");
-    await this.fetchData();
+    this.fetchData().then(r => console.log("rrrr *** :"+ r+"count "+ this.cartCount));
   }
 };
 </script>
