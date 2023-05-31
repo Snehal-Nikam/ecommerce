@@ -4,30 +4,37 @@
       <div class="col-md-1"></div>
       <!--            display image-->
       <div class="col-md-4 col-12">
-        <img :src="product.imgURL" class="img-fluid">
+        <img :src="product.imgURL" class="img-fluid" />
       </div>
       <!--            display product details-->
       <div class="col-md-6 col-12 pt-3 pt-md-0">
-        <h4>{{ product.name }}</h4>
-        <h6 class="catgory font-italic"> {{category.categoryName}}</h6>
-        <h6 class="font-weight-bold"> $ {{product.price}}</h6>
+        <h4>{{ product.productName }}</h4>
+        <h6 class="catgory font-italic">{{ category.categoryName }}</h6>
+        <h6 class="font-weight-bold">$ {{ product.price }}</h6>
         <p>
           {{ product.description }}
         </p>
         <div class="d-flex flex-row justify-content-between">
           <div class="input-group col-md-3 col-4 p-0">
             <div class="input-group-prepend">
-              <span class="input-group-text">Quantity</span>
+              <span class="input-group-text" id="basic-addon1">Quantity</span>
             </div>
-            <input type="number" class="form-control" v-model="quantity" />
+            <input type="number" class="form-control" v-bind:value="quantity" />
           </div>
 
           <div class="input-group col-md-3 col-4 p-0">
-            <button class="btn" id="add-to-cart-button" @click="addToCart">
+            <button
+                class="btn"
+                type="button"
+                id="add-to-cart-button"
+                @click="addToCart(this.id)"
+            >
               Add to Cart
+              <ion-icon name="cart-outline" v-pre></ion-icon>
             </button>
           </div>
         </div>
+
         <div class="features pt-3">
           <h5><strong>Features</strong></h5>
           <ul>
@@ -38,77 +45,84 @@
             <li>ut doloremque dolore corrupti, architecto iusto beatae.</li>
           </ul>
         </div>
-        <button id="wishlist-button" class="btn mr-3 p-1 py-0" @click="addToWishList()" > {{ wishListString }} </button>
+        <button
+            id="wishlist-button"
+            class="btn mr-3 p-1 py-0"
+            :class="{ product_added_wishlist: isAddedToWishlist }"
+            @click="addToWishlist()"
+        >
+          {{ wishListString }}
+        </button>
+        <button
+            id="show-cart-button"
+            type="button"
+            class="btn mr-3 p-1 py-0"
+            @click="listCartItems()"
+        >
+          Show Cart
+
+          <ion-icon name="cart-outline" v-pre></ion-icon>
+        </button>
+
       </div>
+      <div class="col-md-1"></div>
     </div>
   </div>
 </template>
+
 <script>
-import swal from "sweetalert";
-import axios from "axios";
 const axios = require("axios");
 const alert = require("sweetalert");
 export default {
-  name: "ShowDetails",
   data() {
     return {
       product: {},
       category: {},
-      wishListString: "Add to Wishlist",
+      id: null,
+      token: null,
+      isAddedToWishlist: false,
+      quantity: 1,
+      wishListString: "Add to wishlist",
     };
   },
-  props: ["baseURL", "products", "categories"],
+
+  props: ["baseURL", "products", "categories", "cartCount"],
+
   methods: {
-    addToWishList() {
+    addToWishlist() {
       if (!this.token) {
-        swal({
-          message: "Please log in to add item in Wishlist.",
+        // user is not logged in
+        // show some error
+        alert({
+          text: "please login to add item in wishlist",
           icon: "error",
         });
+        console.log("**Path : "+this.$route.fullPath);
+        this.$router.push({ name: 'Signin', query: { redirect: this.$route.fullPath } });
         return;
       }
+      // add item to wishlist
       axios
           .post(`${this.baseURL}wishlist/add?token=${this.token}`, {
-        id: this.product.id,
-      })
+            id: this.product.id,
+          })
           .then((res) => {
             if (res.status === 201) {
-              this.wishListString = "Item added to Wishlist";
-              swal({
-                message: "Item added to Wishlist.",
+              this.isAddedToWishlist = true;
+              this.wishListString = "Added to Wishlist";
+              alert({
+                text: "Added to Wishlist",
                 icon: "success",
               });
             }
           })
           .catch((err) => {
-              console.log("err", err);
+            console.log("err", err);
           });
     },
-  },
-  mounted() {
-    this.id = this.$route.params.id;
-    this.product = this.products.find((product) => product.id == this.id)
-    this.category = this.categories.find(
-        (category) => category.id == this.product.categoryId
-    );
 
-    // eslint-disable-next-line no-undef
-    this.token = localStorage,getItem("token");
-  },
-};
-      quantity: 1
-    }
-  },
-  props: ["baseURL", "products", "categories"],
+    // add to cart
 
-  mounted() {
-    this.id = this.$route.params.id;
-    this.product = this.products.find((product) => product.id == this.id)
-    this.category = this.categories.find(category =>
-        category.id == this.product.categoryId);
-    this.token = localStorage.getItem("token");
-  },
-  methods :{
     addToCart() {
       if (!this.token) {
         // user is not logged in
@@ -134,22 +148,66 @@ export default {
               alert({
                 text: "Product added in cart",
                 icon: "success",
+                closeOnClickOutside: false,
               });
               this.$emit("fetchData");
             }
           })
           .catch((err) => console.log("err", err));
-    }
+    },
+  listCartItems(){
+    axios.get(`${this.baseURL}cart/?token=${this.token}`).then(
+        (response) => {
+          if (response.status === 200) {
+            this.$router.push("/cart");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+    );
   },
-}
-</script>
+  },
 
-<style scoped>
+  mounted() {
+    this.id = this.$route.params.id;
+    this.product = this.products.find((product) => product.id == this.id);
+    this.category = this.categories.find(
+        (category) => category.id == this.product.categoryId
+    );
+    this.token = localStorage.getItem("token");
+  },
+};
+</script>
+<style>
 .category {
   font-weight: 400;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+#add-to-cart-button {
+  background-color: #febd69;
+}
+
 #wishlist-button {
   background-color: #b9b9b9;
+  border-radius: 0;
+}
+
+#show-cart-button {
+  background-color: #131921;
+  color: white;
+  border-radius: 0;
 }
 </style>
