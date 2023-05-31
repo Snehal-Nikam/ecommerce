@@ -34,8 +34,8 @@ export default {
     return {
       baseURL :"http://localhost:8090/",
       products :[],
-      categories : []
-
+      categories : [],
+      cartCount: 0
     }
   },
   methods:{
@@ -54,9 +54,23 @@ export default {
           }).catch(err =>{
             console.log("error from app : "+ err);
           })
-    }
+
+      if (this.token) {
+        axios
+            .get(`${this.baseURL}/cart?token=${this.token}`)
+            .then((res) => {
+              const result = res.data;
+              this.cartCount = result.cartItems.length;
+            })
+            .catch((err) => console.log("err", err));
+      }
+    },
+    resetCartCount() {
+      this.cartCount = 0;
+    },
   },
   async mounted() {
+    this.token = localStorage.getItem("token");
     await this.fetchData();
   }
 };
@@ -82,6 +96,10 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
+}
+
+html {
+  overflow-y: scroll;
 }
 </style>
 navigationBar

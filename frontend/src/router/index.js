@@ -89,7 +89,8 @@ const routes = [
   {
     path: '/signin',
     name: 'Signin',
-    component: Signin
+    component: Signin,
+    props: (route) => ({ previousRoute: route.query.redirect || '/' })
   },
   {
     path: '/admin/product/:id',

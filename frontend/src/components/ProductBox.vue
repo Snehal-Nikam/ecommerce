@@ -4,12 +4,11 @@
       <img
           class="card-img-top embed-responsive-item"
           :src="product.imgURL"
-          alt="Card image cap"
-      />
+          alt="Card image cap"/>
     </div>
     <div class="card-body">
       <router-link :to="{name: 'ShowDetails', params: {id : product.id}}">
-        <h5 class="card-title">{{ product.name }}</h5>
+        <h5 class="card-title">{{product.productName}}</h5>
       </router-link>
       <p class="card-text">
         {{ product.description.substring(0, 65) }}...
@@ -25,6 +24,7 @@
 export default {
   name: "ProductBox",
   props: ["product"]
+
 }
 </script>
 <style scoped>

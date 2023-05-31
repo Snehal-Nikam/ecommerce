@@ -4,7 +4,7 @@ import javax.validation.constraints.NotNull;
 
 public class ProductWrapper {
     private Integer id;
-    private @NotNull String name;
+    private @NotNull String productName;
     private @NotNull String imgURL;
     private @NotNull double price;
     private @NotNull String description;
@@ -20,12 +20,12 @@ public class ProductWrapper {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String name) {
+        this.productName = name;
     }
 
     public String getImgURL() {
