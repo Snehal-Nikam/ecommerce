@@ -17,9 +17,9 @@
         <div class="d-flex flex-row justify-content-between">
           <div class="input-group col-md-3 col-4 p-0">
             <div class="input-group-prepend">
-              <span class="input-group-text">Quantity</span>
+              <span class="input-group-text" id="basic-addon1">Quantity</span>
             </div>
-            <input type="number" class="form-control" v-model="quantity" />
+            <input type="number" class="form-control" v-bind:value="quantity" />
           </div>
 
           <div class="input-group col-md-3 col-4 p-0">
@@ -27,12 +27,14 @@
                 class="btn"
                 type="button"
                 id="add-to-cart-button"
-                @click="addToCart"
+                @click="addToCart(this.id)"
             >
               Add to Cart
+              <ion-icon name="cart-outline" v-pre></ion-icon>
             </button>
           </div>
         </div>
+
         <div class="features pt-3">
           <h5><strong>Features</strong></h5>
           <ul>
@@ -46,14 +48,27 @@
         <button
             id="wishlist-button"
             class="btn mr-3 p-1 py-0"
+            :class="{ product_added_wishlist: isAddedToWishlist }"
             @click="addToWishlist()"
         >
           {{ wishListString }}
         </button>
+        <button
+            id="show-cart-button"
+            type="button"
+            class="btn mr-3 p-1 py-0"
+            @click="listCartItems()"
+        >
+          Show Cart
+
+          <ion-icon name="cart-outline" v-pre></ion-icon>
+        </button>
       </div>
+      <div class="col-md-1"></div>
     </div>
   </div>
 </template>
+
 <script>
 const axios = require("axios");
 const alert = require("sweetalert");
@@ -62,6 +77,9 @@ export default {
     return {
       product: {},
       category: {},
+      id: null,
+      token: null,
+      isAddedToWishlist: false,
       quantity: 1,
       wishListString: "Add to wishlist",
     };
@@ -87,6 +105,7 @@ export default {
           })
           .then((res) => {
             if (res.status === 201) {
+              this.isAddedToWishlist = true;
               this.wishListString = "Added to Wishlist";
               alert({
                 text: "Added to Wishlist",
@@ -126,12 +145,25 @@ export default {
               alert({
                 text: "Product added in cart",
                 icon: "success",
+                closeOnClickOutside: false,
               });
               this.$emit("fetchData");
             }
           })
           .catch((err) => console.log("err", err));
     },
+  listCartItems(){
+    axios.get(`${this.baseURL}cart/?token=${this.token}`).then(
+        (response) => {
+          if (response.status === 200) {
+            this.$router.push("/cart");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+    );
+  },
   },
   mounted() {
     this.id = this.$route.params.id;
@@ -143,13 +175,36 @@ export default {
   },
 };
 </script>
-<style>
+<style scoped>
 .category {
   font-weight: 400;
 }
 
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+#add-to-cart-button {
+  background-color: #febd69;
+}
+
 #wishlist-button {
   background-color: #b9b9b9;
+  border-radius: 0;
+}
+
+#show-cart-button {
+  background-color: #131921;
+  color: white;
+  border-radius: 0;
 }
 
 #add-to-cart-button {
