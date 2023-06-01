@@ -1,3 +1,4 @@
+/Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/model/Address.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/services/ProductService.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/wrappers/product/ProductWrapper.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/model/Cart.java
@@ -21,6 +22,7 @@
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/utils/ResponseUtil.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/configuration/SwaggerConfiguration.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/repos/ProductRepository.java
+/Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/repos/AddressRepository.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/exceptions/CustomException.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/exceptions/AuthenticationFailException.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/controller/UserController.java
@@ -28,6 +30,7 @@
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/exceptions/ExceptionControllerAdvice.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/configuration/webConfiguration.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/exceptions/ProductNotExistsException.java
+/Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/wrappers/profile/ProfileWrapper.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/services/CategoryService.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/repos/CartRepository.java
 /Users/snehalnikam/Desktop/ecommerce/backend/src/main/java/com/example/ecommerce/utils/cart/CartItemUtil.java

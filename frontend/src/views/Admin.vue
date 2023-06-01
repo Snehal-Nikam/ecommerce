@@ -6,6 +6,9 @@
   <router-link :to="{name: 'AdminProduct'}" >
     <button class="btn btn-primary btn-lg"> Admin Product</button>
   </router-link>
+  <router-link :to="{name: 'AdminProduct'}" >
+    <button class="btn btn-primary btn-lg"> Orders</button>
+  </router-link>
 
 </template>
 
