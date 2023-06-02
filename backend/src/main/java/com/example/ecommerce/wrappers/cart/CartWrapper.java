@@ -6,6 +6,11 @@ public class CartWrapper {
     private List<CartItemWrapper> cartItems;
     private double totalCost;
 
+    public CartWrapper(List<CartItemWrapper> cartItems, double totalCost) {
+        this.cartItems = cartItems;
+        this.totalCost = totalCost;
+    }
+
     public CartWrapper() {
     }
 

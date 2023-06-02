@@ -13,6 +13,10 @@ import Signup from "@/views/SignupView.vue";
 import Signin from "@/views/SigninView.vue";
 import Cart from "@/views/Cart.vue";
 import WishList from "@/views/product/WishList.vue";
+import Success from "@/views/payment/Success.vue";
+import Failed from "@/views/payment/Failed.vue";
+import Checkout from "@/views/Checkout/Checkout.vue";
+import PageNotFound from "@/views/PageNotFound.vue";
 
 const routes = [
   {
@@ -72,6 +76,11 @@ const routes = [
     component: ListProducts
   },
   {
+    path : '/:catchAll(.*)',
+    name : 'PageNotFound',
+    component : PageNotFound
+  },
+  {
     path: '/admin/category/:id',
     name: 'EditCategory',
     component: EditCategory
@@ -103,6 +112,21 @@ const routes = [
     component: Cart
   },
   {
+    path : '/checkout',
+    name : 'Checkout',
+    component : Checkout
+  },
+  {
+    path: '/payment/success',
+    name: 'PaymentSuccess',
+    component: Success
+  },
+  {
+    path: '/payment/failed',
+    name: 'PaymentFail',
+    component: Failed
+  },
+  {
     path: '/wishlist',
     name: 'WishList',
     component: WishList
@@ -114,5 +138,11 @@ const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+//scroll to top after every route change
+router.beforeEach((to, from, next) => {
+  window.scrollTo(0, 0);
+  next();
+});
 
 export default router
