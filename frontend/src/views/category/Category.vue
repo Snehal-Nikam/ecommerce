@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-12 text-center">
         <h3 class="pt-3">Our Categories</h3>
-        <router-link :to="{ name: 'AddCategory' }">
+        <router-link :to="{ name: 'AddCategory' }" v-show="$route.name=='AdminCategory'">
           <button class="btn" style="float:right">Add Category</button>
         </router-link>
       </div>
@@ -34,9 +34,13 @@ export default {
   },
   methods: {
 
+
   },
   mounted() {
     //this.getCategories();
+    if (this.$route.name=='AdminCategory' && !localStorage.getItem('token')) {
+      this.$router.push({name : 'Signin'});
+    }
   }
 };
 </script>

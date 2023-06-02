@@ -4,9 +4,13 @@ public class SignInResponseWrapper {
     private String status;
     private String token;
 
-    public SignInResponseWrapper(String status, String token) {
+    private boolean isAdmin;
+
+
+    public SignInResponseWrapper(String status, String token, boolean isAdmin) {
         this.status = status;
         this.token = token;
+        this.isAdmin = isAdmin;
     }
 
     public String getStatus() {
@@ -24,4 +28,12 @@ public class SignInResponseWrapper {
     public void setToken(String token) {
         this.token = token;
     }
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
 }

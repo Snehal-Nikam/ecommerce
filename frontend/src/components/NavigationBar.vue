@@ -83,6 +83,11 @@
               <router-link
                   v-if="token"
                   class="dropdown-item"
+                  :to="{ name: 'MyProfile' }"> My Profile</router-link>
+
+              <router-link
+                  v-if="token"
+                  class="dropdown-item"
                   :to="{ name: 'WishList' }"
               >Wishlist
               </router-link>
@@ -98,6 +103,11 @@
                   :to="{ name: 'Signin' }"
               >Sign in
               </router-link>
+              <router-link
+                  v-show="admin"
+                  class="dropdown-item"
+                  :to="{ name: 'Admin' }">Seller</router-link>
+
               <a class="dropdown-item" v-if="token" href="#" @click="signout"
               >Sign out
               </a>
@@ -125,12 +135,15 @@ export default {
   data() {
     return {
       token: null,
+      admin: false
     };
   },
   methods: {
     signout() {
       localStorage.removeItem("token");
+      localStorage.removeItem("Admin")
       this.token = null;
+
       alert({
         text: "Logged you out. Visit again",
         icon: "success",
@@ -142,6 +155,7 @@ export default {
   mounted() {
     console.log("cart navbar : "+ this.cartCount);
     this.token = localStorage.getItem("token");
+    this.admin = localStorage.getItem("Admin")==="true"?true:false;
   },
 };
 </script>
