@@ -66,13 +66,10 @@
 
 <script>
 import axios from 'axios';
-import swal from 'sweetalert';
+import alert from 'sweetalert';
 export default {
   name: "SigninView",
-  props: ["baseURL", "previousRoute: {\n" +
-  "      type: String,\n" +
-  "      default: '/'\n" +
-  "    }"],
+  props: ["baseURL"],
   data() {
     return {
       email: null,
@@ -93,18 +90,25 @@ export default {
       await axios
           .post(`${this.baseURL}user/signin`, user)
           .then((res) => {
-            // redirect to home page
+            console.log("sign in data"+JSON.stringify(res.data));
             localStorage.setItem("token", res.data.token);
+
             this.$emit("fetchData");
-            console.log("History ** "+ this.$router.options.history.state.back);
+            if(res.data.admin)
+              localStorage.setItem("Admin", "true");
+            //   this.$router.push(this.$router.options.history.state.back);
+            // }
+            // else
+              this.$router.push(this.$router.options.history.state.back);
+              console.log("History ** "+ this.$router.options.history.state.back);
             //this.$router.push({ name: "Home" });
 
-            this.$router.push(this.$router.options.history.state.back);
+
 
           })
           .catch((err) => {
             console.log(err);
-            swal({
+            alert({
               text: "Unable to Log you in!",
               icon: "error",
               closeOnClickOutside: false,

@@ -61,6 +61,8 @@ export default {
         },
       })
           .then(() => {
+            this.$emit("fetchData");
+            this.$router.push({name:'AdminCategory'});
             alert({
               text: "Category added successfully",
               icon: "success",
@@ -71,6 +73,11 @@ export default {
           });
     },
   },
+  mounted(){
+    if (!localStorage.getItem('token')) {
+      this.$router.push({name : 'Signin'});
+    }
+  }
 };
 </script>
 <style scoped></style>

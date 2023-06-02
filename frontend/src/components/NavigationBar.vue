@@ -51,16 +51,14 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
             <a
-                class="nav-link text-dark dropdown-toggle"
+                class="nav-link dropdown-toggle"
                 href="#"
-                id="navbarDropdown"
+                id="navbarAccount"
                 data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
             >
               Browse
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu" aria-labelledby="navbarAccount">
               <router-link class="dropdown-item" :to="{ name: 'Home' }"
               >Home
               </router-link>
@@ -74,33 +72,24 @@
           </li>
           <li class="nav-item dropdown">
             <a
-                class="nav-link text-dark dropdown-toggle"
+                class="nav-link dropdown-toggle"
                 href="#"
-                id="navbarDropdown"
-                role="button"
+                id="navbarAccount"
                 data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
             >
               Accounts
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <div class="dropdown-menu" aria-labelledby="navbarAccount">
               <router-link
-                  v-if="!token"
+                  v-if="token"
                   class="dropdown-item"
-                  :to="{ name: 'Signin' }"
+                  :to="{ name: 'MyProfile' }"> My Profile</router-link>
+
+              <router-link
+                  v-if="token"
+                  class="dropdown-item"
+                  :to="{ name: 'WishList' }"
               >Wishlist
-              </router-link>
-              <router-link class="dropdown-item" v-else :to="{ name: 'WishList' }"
-              >Wishlist</router-link
-              >
-              <router-link class="dropdown-item" :to="{ name: 'Admin' }"
-              >Admin</router-link>
-              <router-link
-                  v-if="!token"
-                  class="dropdown-item"
-                  :to="{ name: 'Signin' }"
-              >Sign in
               </router-link>
               <router-link
                   v-if="!token"
@@ -108,6 +97,16 @@
                   :to="{ name: 'Signup' }"
               >Sign up
               </router-link>
+              <router-link
+                  v-if="!token"
+                  class="dropdown-item"
+                  :to="{ name: 'Signin' }"
+              >Sign in
+              </router-link>
+              <router-link
+                  v-show="admin"
+                  class="dropdown-item"
+                  :to="{ name: 'Admin' }">Seller</router-link>
 
               <a class="dropdown-item" v-if="token" href="#" @click="signout"
               >Sign out
@@ -115,9 +114,9 @@
             </div>
           </li>
           <li class="nav-item">
-            <div id="cart">
+            <div id="cart" style="position:relative">
               <span id="nav-cart-count">{{ cartCount }}</span>
-              <router-link class="text-dark" :to="{ name: 'Cart' }">
+              <router-link class="text-light" :to="{ name: 'Cart' }">
                 <i class="fa fa-shopping-cart" style="font-size:36px; color: rgba(0,0,0,.5)"></i>
               </router-link>
             </div>
@@ -127,8 +126,6 @@
       </div>
     </nav>
   </template>
-
-
 <script>
 //const axios = require("axios");
 const alert = require("sweetalert");
@@ -138,37 +135,46 @@ export default {
   data() {
     return {
       token: null,
+      admin: false
     };
   },
   methods: {
     signout() {
       localStorage.removeItem("token");
+      localStorage.removeItem("Admin")
       this.token = null;
-      this.$emit("resetCartCount");
-      this.$router.push({ name: "Home" });
+
       alert({
         text: "Logged you out. Visit again",
         icon: "success",
-        closeOnClickOutside: false,
       });
+      this.$emit("resetCartCount");
+      this.$router.push({ name: "Home" });
     }
   },
   mounted() {
     console.log("cart navbar : "+ this.cartCount);
     this.token = localStorage.getItem("token");
+    this.admin = localStorage.getItem("Admin")==="true"?true:false;
   },
 };
 </script>
-
 <style scoped>
 #logo {
   width: 50px;
   margin-left: 20px;
   margin-right: 20px;
 }
+.toplogo {
+  margin-top: 5px;
+}
 
+.toplogo img {
+  height : 10%;
+  width : 10%;
+}
 .nav-link {
-  color: rgba(255, 255, 255);
+  color: rgba(250, 250, 250);
 }
 
 #search-button-navbar {
@@ -177,20 +183,20 @@ export default {
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 }
+
 #nav-cart-count {
   background-color: red;
   color: white;
   border-radius: 50%;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 15px;
   height: 15px;
+  width: 15px;
   font-size: 15px;
+  align-items: center;
+
+  display: flex;
+  justify-content: center;
+
+  position: absolute;
   margin-left: 10px;
-}
-#cart {
-  position: relative;
 }
 </style>

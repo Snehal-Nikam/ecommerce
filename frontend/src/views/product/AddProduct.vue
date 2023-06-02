@@ -72,6 +72,7 @@ export default {
       };
       axios.post(this.baseURL+"product/create", newProduct)
           .then(() => {
+            this.$emit("fetchData");
             this.$router.push({name: 'AdminProduct'});
             alert({
               text: "Product added",
@@ -81,6 +82,11 @@ export default {
           .catch((err)=> {
             console.log("err", err);
           })
+    }
+  },
+  mounted() {
+    if (!localStorage.getItem('token')) {
+      this.$router.push({name : 'Signin'});
     }
   }
 }

@@ -102,7 +102,7 @@ public class UserService {
             throw new CustomException("Token is not present.");
         }
 
-        return new SignInResponseWrapper("Success", token.getToken());
+        return new SignInResponseWrapper("Success", token.getToken(), user.isAdmin());
     }
 
     public ProfileWrapper getUserProfile(User user){
