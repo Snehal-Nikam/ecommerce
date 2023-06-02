@@ -25,6 +25,9 @@ public class Order {
     @Column(name = "session_id")
     private String sessionId;
 
+    @Column(name = "order_Status")
+    private String status="Order Placed";
+
     @OneToMany(mappedBy = "order", fetch = FetchType.LAZY)
     private List<OrderItem> orderItems;
 
@@ -84,5 +87,13 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

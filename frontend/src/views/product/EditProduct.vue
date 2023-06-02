@@ -78,6 +78,10 @@ export default {
     }
   },
   mounted() {
+    if (!localStorage.getItem('token')) {
+      this.$router.push({name : 'Signin'});
+      return;
+    }
     this.id = this.$route.params.id;
     this.product = this.products.find(product => product.id == this.id)
   }

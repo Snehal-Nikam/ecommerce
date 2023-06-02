@@ -23,6 +23,17 @@ public class User {
     @Column(name="phone")
     private String phone;
 
+    @Column(name="is_admin",columnDefinition = "default false")
+    private boolean isAdmin;
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
     public Integer getId() {
         return id;
     }

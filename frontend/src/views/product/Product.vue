@@ -2,8 +2,8 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h4> Our Products</h4>
-        <router-link :to="{name: 'AddProduct'}" style="float: right">
+        <h3> Our Products</h3>
+        <router-link :to="{name: 'AddProduct'}" v-show="$route.name=='AdminProduct'" style="float: right">
           <button class="btn" >
             Add Product
           </button> </router-link>

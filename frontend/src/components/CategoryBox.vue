@@ -15,7 +15,7 @@
         {{ category.description }}
       </p>
       <router-link :to="{name: 'EditCategory', params: {id: category.id}}"
-                   v-show="$route.name == 'Category'">
+                   v-show="$route.name == 'AdminCategory'">
         <button class="btn btn-primary">Edit</button>
       </router-link>
     </div>

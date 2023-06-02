@@ -13,6 +13,8 @@ import Signup from "@/views/SignupView.vue";
 import Signin from "@/views/SigninView.vue";
 import Cart from "@/views/Cart.vue";
 import WishList from "@/views/product/WishList.vue";
+import MyProfile from "@/views/Profile/MyProfile.vue";
+import AddAddress from "@/views/Profile/AddAddress.vue";
 
 const routes = [
   {
@@ -107,6 +109,16 @@ const routes = [
     name: 'WishList',
     component: WishList
   },
+  {
+    path: '/myprofile',
+    name: 'MyProfile',
+    component: MyProfile
+  },
+  {
+    path: '/addAddress',
+    name: 'AddAddress',
+    component: AddAddress
+  }
 
 ]
 
