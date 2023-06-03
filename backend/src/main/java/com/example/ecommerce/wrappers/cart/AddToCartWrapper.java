@@ -1,5 +1,6 @@
 package com.example.ecommerce.wrappers.cart;
 
+import com.example.ecommerce.model.Cart;
 import javax.validation.constraints.NotNull;
 
 public class AddToCartWrapper {
@@ -8,6 +9,15 @@ public class AddToCartWrapper {
     private @NotNull Integer quantity;
 
     public AddToCartWrapper() {
+    }
+
+    @Override
+    public String toString() {
+        return "CartDto{" +
+                "id=" + id +
+                ", productId=" + productId +
+                ", quantity=" + quantity +
+                ",";
     }
 
     public Integer getId() {

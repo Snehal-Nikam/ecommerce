@@ -18,7 +18,8 @@
 </template>
 <script>
 import axios from "axios";
-import Stripe from '@stripe/stripe-js/pure';
+import {loadStripe} from '@stripe/stripe-js';
+
 export default {
   data() {
     return {
@@ -83,7 +84,7 @@ export default {
     // get the token
     this.token = localStorage.getItem('token');
     // get all the cart items
-    this.stripe = Stripe(this.stripeAPIToken);
+    this.stripe = loadStripe(this.stripeAPIToken);
     this.getAllItems();
   },
 };
