@@ -51,14 +51,16 @@
         <ul class="navbar-nav ml-auto">
           <li class="nav-item dropdown">
             <a
-                class="nav-link dropdown-toggle"
+                class="nav-link text-dark dropdown-toggle"
                 href="#"
-                id="navbarAccount"
+                id="navbarDropdown"
                 data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
             >
               Browse
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarAccount">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <router-link class="dropdown-item" :to="{ name: 'Home' }"
               >Home
               </router-link>
@@ -70,16 +72,19 @@
               </router-link>
             </div>
           </li>
-          <li class="nav-item dropdown">
+          <li class="nav-item  dropdown">
             <a
-                class="nav-link dropdown-toggle"
+                class="nav-link text-dark dropdown-toggle"
                 href="#"
-                id="navbarAccount"
+                id="navbarDropdown"
+                role="button"
                 data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
             >
               Accounts
             </a>
-            <div class="dropdown-menu" aria-labelledby="navbarAccount">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
               <router-link
                   v-if="token"
                   class="dropdown-item"
@@ -114,7 +119,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <div id="cart" style="position:relative">
+            <div id="cart">
               <span id="nav-cart-count">{{ cartCount }}</span>
               <router-link class="text-light" :to="{ name: 'Cart' }">
                 <i class="fa fa-shopping-cart" style="font-size:36px; color: rgba(0,0,0,.5)"></i>
@@ -126,6 +131,8 @@
       </div>
     </nav>
   </template>
+
+
 <script>
 //const axios = require("axios");
 const alert = require("sweetalert");
@@ -147,6 +154,7 @@ export default {
       alert({
         text: "Logged you out. Visit again",
         icon: "success",
+        closeOnClickOutside: false,
       });
       this.$emit("resetCartCount");
       this.$router.push({ name: "Home" });
@@ -159,20 +167,14 @@ export default {
   },
 };
 </script>
+
 <style scoped>
 #logo {
   width: 50px;
   margin-left: 20px;
   margin-right: 20px;
 }
-.toplogo {
-  margin-top: 5px;
-}
 
-.toplogo img {
-  height : 10%;
-  width : 10%;
-}
 .nav-link {
   color: rgba(250, 250, 250);
 }
@@ -188,15 +190,16 @@ export default {
   background-color: red;
   color: white;
   border-radius: 50%;
-  height: 15px;
-  width: 15px;
-  font-size: 15px;
-  align-items: center;
-
-  display: flex;
-  justify-content: center;
-
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  font-size: 15px;
   margin-left: 10px;
+}
+#cart {
+  position: relative;
 }
 </style>

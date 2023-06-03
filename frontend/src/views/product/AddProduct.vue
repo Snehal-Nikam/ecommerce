@@ -7,7 +7,7 @@
     </div>
     <div class="row">
       <div class="col-3"></div>
-      <div class="col-6">
+      <div class="col-md-6 px-5 px-md-0">
         <form>
           <div class="form-group">
             <label>Category</label>
@@ -18,19 +18,19 @@
           </div>
           <div class="form-group">
             <label>Name</label>
-            <input type="text" v-model="name" class="form-control" >
+            <input type="text" v-model="name" class="form-control" required>
           </div>
           <div class="form-group">
             <label>Description</label>
-            <input type="text" v-model="description" class="form-control" >
+            <input type="text" v-model="description" class="form-control" required>
           </div>
           <div class="form-group">
             <label>Image Url</label>
-            <input type="text"  v-model="imageURL" class="form-control" >
+            <input type="text"  v-model="imageURL" class="form-control" required>
           </div>
           <div class="form-group">
             <label>Price</label>
-            <input type="number" v-model="price" class="form-control" >
+            <input type="number" v-model="price" class="form-control" required>
           </div>
           <button type="button" class="btn btn-primary" @click="addProduct">Add Product</button>
         </form>
@@ -93,5 +93,10 @@ export default {
 </script>
 
 <style scoped>
+h4 {
+  font-family: 'Roboto', sans-serif;
+  color: #484848;
+  font-weight: 700;
+}
 
 </style>

@@ -7,19 +7,19 @@
     </div>
     <div class="row">
       <div class="col-3"></div>
-      <div class="col-6">
+      <div class="col-md-6 px-5 px-md-0">
         <form>
           <div class="form-group">
             <label>Name</label>
-            <input type="text" class="form-control" v-model="categoryName" />
+            <input type="text" class="form-control" v-model="categoryName" required/>
           </div>
           <div class="form-group">
             <label>Description</label>
-            <textarea type="text" class="form-control" v-model="description" />
+            <textarea type="text" class="form-control" v-model="description" required/>
           </div>
           <div class="form-group">
             <label>Image</label>
-            <input type="text" class="form-control" v-model="imgURL" />
+            <input type="text" class="form-control" v-model="imgURL" required/>
           </div>
           <button type="button" class="btn btn-primary" @click="addCategory">
             Submit
@@ -66,6 +66,7 @@ export default {
             alert({
               text: "Category added successfully",
               icon: "success",
+              closeOnClickOutside: false,
             });
           })
           .catch((err) => {
@@ -80,4 +81,11 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+
+<style scoped>
+h4 {
+  font-family: 'Roboto', sans-serif;
+  color: #484848;
+  font-weight: 700;
+}
+</style>
