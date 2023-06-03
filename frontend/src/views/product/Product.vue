@@ -24,7 +24,7 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Product",
   components: {ProductBox},
-  props:["products"]
+  props:["products"],
   mounted(){
     if (this.$route.name=='AdminProduct' && !localStorage.getItem('token')) {
       this.$router.push({name : 'Signin'});
