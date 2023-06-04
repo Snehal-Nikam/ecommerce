@@ -33,7 +33,7 @@
             <router-link
                 :to="{ name: 'ShowDetails', params: { id: cartItem.product.id } }"
             >
-              {{ cartItem.product.name }}
+              {{ cartItem.product.productName }}
             </router-link>
           </h6>
           <p class="mb-0 font-weight-bold" id="item-price">
@@ -104,18 +104,18 @@ export default {
       axios
           .get(`${this.baseURL}cart/?token=${this.token}`)
           .then((res) => {
-                if (res.status == 200) {
+                // if (res.status == 200) {
                   const result = res.data;
                   this.cartItems = result.cartItems;
                   this.totalCost = result.totalCost;
-                }
+                // }
           })
           .catch((err) => console.log("err", err));
     },
     // go to checkout page
-    checkout() {
-      this.$router.push({ name: 'Checkout' });
-    },
+    // checkout() {
+    //   this.$router.push({ name: 'Checkout' });
+    // },
     deleteItem(itemId) {
       axios
           .delete(`${this.baseURL}cart/delete/${itemId}?token=${this.token}`)
@@ -127,12 +127,16 @@ export default {
           })
           .catch((err) => console.log("err", err));
     },
-    showDetails(productId) {
-      this.$router.push({
-        name: 'ShowDetails',
-        params: { id: productId },
-      });
+    // go to checkout page
+    checkout() {
+      this.$router.push({ name: 'Checkout' });
     },
+    // showDetails(productId) {
+    //   this.$router.push({
+    //     name: 'ShowDetails',
+    //     params: { id: productId },
+    //   });
+    // },
   },
   mounted() {
     this.token = localStorage.getItem("token");

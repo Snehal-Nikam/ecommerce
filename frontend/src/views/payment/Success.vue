@@ -2,6 +2,7 @@
   <div class="text-center">
     <div class="spinner-border" role="status">
       <span class="sr-only">Loading...</span>
+      <h3>Payment Successful</h3>
     </div>
   </div>
 </template>

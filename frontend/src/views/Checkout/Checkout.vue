@@ -18,7 +18,6 @@
 </template>
 <script>
 import axios from "axios";
-import {loadStripe} from '@stripe/stripe-js';
 
 export default {
   data() {
@@ -26,7 +25,6 @@ export default {
       stripeAPIToken: 'pk_test_51NDbmUJyO5bWrjXvLHquMSWuluJBdRiCpbsrOx1Og6E11PlQbFJREk29HlOtkVpOvKj7z0OnvYWGIaxwmqKvWWJm00ewFtP8Lt',
       stripe: '',
       token: null,
-      sessionId: null,
       checkoutBodyArray: [],
     };
   },
@@ -38,22 +36,18 @@ export default {
       Configures Stripe by setting up the elements and
       creating the card element.
     */
-    configureStripe() {},
 
     getAllItems() {
-      axios.get(`${this.baseURL}cart/?token=${this.token}`).then(
-          (response) => {
+      axios.get(`${this.baseURL}cart/?token=${this.token}`)
+          .then((response) => {
             if (response.status == 200) {
               let products = response.data;
-              let len = Object.keys(products.cartItems).length;
-              for (let i = 0; i < len; i++)
+              for (let i = 0; i < products.cartItems.length; i++)
                 this.checkoutBodyArray.push({
-                  imageUrl: products.cartItems[i].product.imageURL,
-                  productName: products.cartItems[i].product.name,
-                  quantity: products.cartItems[i].quantity,
                   price: products.cartItems[i].product.price,
+                  quantity: products.cartItems[i].quantity,
+                  productName: products.cartItems[i].product.productName,
                   productId: products.cartItems[i].product.id,
-                  userId: products.cartItems[i].userId,
                 });
             }
           },
@@ -63,28 +57,28 @@ export default {
       );
     },
 
-    goToCheckout() {
-      axios
+    async goToCheckout() {
+      console.log("checkoutBodyArray", this.checkoutBodyArray);
+      await axios
           .post(
               this.baseURL + 'order/create-checkout-session',
               this.checkoutBodyArray
           )
           .then((response) => {
             localStorage.setItem('sessionId', response.data.sessionId);
-            return response.data;
-          })
-          .then((session) => {
-            return this.stripe.redirectToCheckout({
-              sessionId: session.sessionId,
-            });
-          });
+            console.log("session", response.data);
+            const stripe = window.Stripe(this.stripeAPIToken);
+            stripe.redirectToCheckout({ sessionId: response.data.sessionId })
+          }),
+          (err) => {
+            console.log(err);
+          }
     },
   },
   mounted() {
     // get the token
     this.token = localStorage.getItem('token');
     // get all the cart items
-    this.stripe = loadStripe(this.stripeAPIToken);
     this.getAllItems();
   },
 };
