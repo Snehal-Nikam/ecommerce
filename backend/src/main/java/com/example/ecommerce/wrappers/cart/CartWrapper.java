@@ -13,9 +13,13 @@ public class CartWrapper {
 
     public CartWrapper() {
     }
+    
+    public void setCartItems(List<CartItemWrapper> cartItems) {
+        this.cartItems = cartItems;
+    }
 
-    public void setCartItems(List<CartItemWrapper> cartItemWrapperList) {
-        this.cartItems = cartItemWrapperList;
+    public List<CartItemWrapper> getcartItems() {
+        return cartItems;
     }
 
     public double getTotalCost() {

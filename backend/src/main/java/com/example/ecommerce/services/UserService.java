@@ -8,6 +8,8 @@ import com.example.ecommerce.utils.ResponseUtil;
 import com.example.ecommerce.wrappers.product.ProductWrapper;
 import com.example.ecommerce.wrappers.profile.AddressWrapper;
 import com.example.ecommerce.wrappers.profile.ProfileWrapper;
+import com.example.ecommerce.wrappers.profile.UpdatePasswordWrapper;
+import com.example.ecommerce.wrappers.profile.UserInfoWrapper;
 import com.example.ecommerce.wrappers.user.SignInWrapper;
 import com.example.ecommerce.wrappers.user.SignInResponseWrapper;
 import com.example.ecommerce.wrappers.user.SignupWrapper;
@@ -116,22 +118,38 @@ public class UserService {
         profileData.setLastName(user.getLastName());
         profileData.setEmail(user.getEmail());
         profileData.setAddresses(lstAddress);
+        profileData.setPhone(user.getPhone());
         //To do : Order
         return profileData;
     }
 
-//    public AddressWrapper createAddressWrapper(Address address){
-//        AddressWrapper addressWrapper = new AddressWrapper();
-//        addressWrapper.setAddressLine1(address.getAddressLine1());
-//        addressWrapper.setAddressLine2(address.getAddressLine2());
-//        addressWrapper.setCity(address.getCity());
-//        addressWrapper.setPrimary(address.isPrimary());
-//        addressWrapper.setPhone(address.getPhone());
-//        addressWrapper.setZipCode(address.getZipCode());
-//        addressWrapper.setState(addressWrapper.getState());
-//        addressWrapper.setId(address.getId());
-//        return addressWrapper;
-//    }
+    public ResponseUtil updateUser(UserInfoWrapper userInfoWrapper, User user) {
+        user.setFirstName(userInfoWrapper.getFirstName());
+        user.setLastName(userInfoWrapper.getLastname());
+        user.setEmail(userInfoWrapper.getEmail());
+        user.setPhone(userInfoWrapper.getPhone());
+        userRepository.save(user);
+        return new ResponseUtil(true, "User updated Successfully"+userInfoWrapper.getLastname());
+    }
+
+    public ResponseUtil updatePassword(UpdatePasswordWrapper updatePasswordWrapper, User user){
+        try {
+            if (!user.getPassword().equals(hashPassword(updatePasswordWrapper.getOldPassword()))) {
+                return new ResponseUtil(false, "Old password provided is wrong");
+            }
+            else{
+                user.setPassword(hashPassword(updatePasswordWrapper.getNewPassword()));
+                userRepository.save(user);
+                return new ResponseUtil(true, "Password updated Successfully");
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+            return new ResponseUtil(true, "Something went wrong.");
+
+        }
+    }
+
+
     public Address getAddressFromWrapper(AddressWrapper addressWrapper, User user){
         Address address = new Address();
         address.setAddressLine1(addressWrapper.getAddressLine1());
