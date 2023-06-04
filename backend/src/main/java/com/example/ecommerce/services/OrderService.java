@@ -97,8 +97,6 @@ public class OrderService {
         // first let get cart items for the user
         CartWrapper cartWrapper = cartService.listCartItems(user);
 
-        List<CartItemWrapper> cartItemWrapperList = cartWrapper.getcartItems();
-
         // create the order and save it
         Order newOrder = new Order();
         newOrder.setCreatedDate(new Date());
