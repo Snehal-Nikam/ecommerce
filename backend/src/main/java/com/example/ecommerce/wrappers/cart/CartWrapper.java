@@ -17,10 +17,6 @@ public class CartWrapper {
         this.cartItems = cartItems;
     }
 
-    public List<CartItemWrapper> getcartItems() {
-        return cartItems;
-    }
-
     public double getTotalCost() {
         return totalCost;
     }
