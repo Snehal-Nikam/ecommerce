@@ -6,13 +6,14 @@ public class CartWrapper {
     private List<CartItemWrapper> cartItems;
     private double totalCost;
 
-    public CartWrapper() {
+    public CartWrapper(List<CartItemWrapper> cartItemWrapperList, double totalCost) {
+        this.cartItems = cartItemWrapperList;
+        this.totalCost = totalCost;
     }
 
-//    public List<CartItemWrapper> getCartItems() {
-//        return cartItems;
-//    }
-
+    public CartWrapper() {
+    }
+    
     public void setCartItems(List<CartItemWrapper> cartItems) {
         this.cartItems = cartItems;
     }

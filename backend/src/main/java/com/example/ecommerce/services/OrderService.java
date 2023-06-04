@@ -1,6 +1,5 @@
 package com.example.ecommerce.services;
 
-import com.example.ecommerce.services.CartService;
 import com.stripe.Stripe;
 import com.stripe.exception.StripeException;
 import com.stripe.model.checkout.Session;
@@ -17,6 +16,7 @@ import com.example.ecommerce.repos.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.example.ecommerce.services.CartService;
 
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
@@ -45,29 +45,29 @@ public class OrderService {
     private String apiKey;
 
     // create total price
-    SessionCreateParams.LineItem.PriceData createPriceData(CheckoutItemWrapper checkoutItemDto) {
+    SessionCreateParams.LineItem.PriceData createPriceData(CheckoutItemWrapper checkoutItemWrapper) {
         return SessionCreateParams.LineItem.PriceData.builder()
                 .setCurrency("usd")
-                .setUnitAmount((long)(checkoutItemDto.getPrice()*100))
+                .setUnitAmount((long)(checkoutItemWrapper.getPrice()*100))
                 .setProductData(
                         SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                .setName(checkoutItemDto.getProductName())
+                                .setName(checkoutItemWrapper.getProductName())
                                 .build())
                 .build();
     }
 
     // build each product in the stripe checkout page
-    SessionCreateParams.LineItem createSessionLineItem(CheckoutItemWrapper checkoutItemDto) {
+    SessionCreateParams.LineItem createSessionLineItem(CheckoutItemWrapper checkoutItemWrapper) {
         return SessionCreateParams.LineItem.builder()
                 // set price for each product
-                .setPriceData(createPriceData(checkoutItemDto))
+                .setPriceData(createPriceData(checkoutItemWrapper))
                 // set quantity for each product
-                .setQuantity(Long.parseLong(String.valueOf(checkoutItemDto.getQuantity())))
+                .setQuantity(Long.parseLong(String.valueOf(checkoutItemWrapper.getQuantity())))
                 .build();
     }
 
     // create session from list of checkout items
-    public Session createSession(List<CheckoutItemWrapper> checkoutItemDtoList) throws StripeException {
+    public Session createSession(List<CheckoutItemWrapper> checkoutItemWrapperList) throws StripeException {
 
         // supply success and failure url for stripe
         String successURL = baseURL + "payment/success";
@@ -79,8 +79,8 @@ public class OrderService {
         List<SessionCreateParams.LineItem> sessionItemsList = new ArrayList<>();
 
         // for each product compute SessionCreateParams.LineItem
-        for (CheckoutItemWrapper checkoutItemDto : checkoutItemDtoList) {
-            sessionItemsList.add(createSessionLineItem(checkoutItemDto));
+        for (CheckoutItemWrapper checkoutItemWrapper : checkoutItemWrapperList) {
+            sessionItemsList.add(createSessionLineItem(checkoutItemWrapper));
         }
 
         // build the session param
@@ -98,7 +98,7 @@ public class OrderService {
         // first let get cart items for the user
         CartWrapper cartWrapper = cartService.listCartItems(user);
 
-        List<CartItemWrapper> cartItemDtoList = cartWrapper.getcartItems();
+        List<CartItemWrapper> cartItemWrapperList = cartWrapper.getCartItems();
 
         // create the order and save it
         Order newOrder = new Order();
@@ -108,13 +108,13 @@ public class OrderService {
         newOrder.setTotalPrice(cartWrapper.getTotalCost());
         orderRepository.save(newOrder);
 
-        for (CartItemWrapper cartItemDto : cartItemDtoList) {
+        for (CartItemWrapper cartItemWrapper : cartItemWrapperList) {
             // create orderItem and save each one
             OrderItem orderItem = new OrderItem();
             orderItem.setCreatedDate(new Date());
-            orderItem.setPrice(cartItemDto.getProduct().getPrice());
-            orderItem.setProduct(cartItemDto.getProduct());
-            orderItem.setQuantity(cartItemDto.getQuantity());
+            orderItem.setPrice(cartItemWrapper.getProduct().getPrice());
+            orderItem.setProduct(cartItemWrapper.getProduct());
+            orderItem.setQuantity(cartItemWrapper.getQuantity());
             orderItem.setOrder(newOrder);
             // add to order item list
             orderItemsRepository.save(orderItem);

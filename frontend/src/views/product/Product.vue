@@ -3,7 +3,7 @@
     <div class="row">
       <div class="col-12 text-center">
         <h3> Our Products</h3>
-        <router-link :to="{name: 'AddProduct'}" v-show="$route.name=='AdminProduct'" style="float: right">
+        <router-link id="add-product" :to="{name: 'AddProduct'}" v-show="$route.name=='AdminProduct'">
           <button class="btn" >
             Add Product
           </button> </router-link>
@@ -11,7 +11,7 @@
     </div>
     <div class="row">
       <div v-for="product of products" :key="product.id"
-           class="col-md-6 col-xl-4 col-12 pt-3 d-flex">
+           class="col-md-6 col-xl-4 col-12 pt-3 justify-content-around d-flex">
         <ProductBox :product="product"/>
       </div>
     </div>
@@ -24,10 +24,24 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Product",
   components: {ProductBox},
-  props:["products"]
+  props:["products"],
+  mounted(){
+    if (this.$route.name=='AdminProduct' && !localStorage.getItem('token')) {
+      this.$router.push({name : 'Signin'});
+    }
+  }
 }
 </script>
 
 <style scoped>
+h4 {
+  font-family: 'Roboto', sans-serif;
+  color: #484848;
+  font-weight: 700;
+}
 
+#add-product {
+  float: right;
+  font-weight: 500;
+}
 </style>

@@ -7,7 +7,7 @@
     </div>
     <div class="row">
       <div class="col-3"></div>
-      <div class="col-6">
+      <div class="col-md-6 px-5 px-md-0">
         <form v-if="category">
           <div class="form-group">
             <label>Category Name</label>
@@ -21,7 +21,7 @@
           </div>
           <div class="form-group">
             <label>Image URL</label>
-            <input type="text" class="form-control"
+            <input type="url" class="form-control"
                    v-model="category.imageUrl"  required/>
           </div>
           <button type="button" class="btn btn-primary" @click="editCategory" >Submit</button>
@@ -51,7 +51,7 @@ export default {
           this.category)
           .then(() => {
             this.$emit("fetchData");
-            this.$router.push({name: 'Category'})
+            this.$router.push({name: 'AdminCategory'})
             alert({
               text: "category has been updated successfully",
               icon: "success"
@@ -60,8 +60,21 @@ export default {
     }
   },
   mounted() {
+    if (!localStorage.getItem('token')) {
+      this.$router.push({name : 'Signin'});
+      return;
+    }
     this.id = this.$route.params.id;
     this.category = this.categories.find(category => category.id == this.id)
+    console.log('category', this.category);
   }
 }
 </script>
+
+<style scoped>
+h4 {
+  font-family: 'Roboto', sans-serif;
+  color: #484848;
+  font-weight: 700;
+}
+</style>

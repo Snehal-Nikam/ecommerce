@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-12 text-center">
         <h3 class="pt-3">Our Categories</h3>
-        <router-link :to="{ name: 'AddCategory' }" v-show="$route.name=='AdminCategory'">
-          <button class="btn" style="float:right">Add Category</button>
+        <router-link id="add-category" :to="{ name: 'AddCategory' }" v-show="$route.name=='AdminCategory'">
+          <button class="btn">Add Category</button>
         </router-link>
       </div>
     </div>
@@ -12,7 +12,7 @@
       <div
           v-for="category of categories"
           :key="category.id"
-          class="col-xl-4 col-md-6 col-12 pt-3 d-flex">
+          class="col-xl-4 col-md-6 col-12 pt-3 justify-content-around d-flex">
 
           <CategoryBox :category="category"> </CategoryBox>
       </div>
@@ -44,4 +44,16 @@ export default {
   }
 };
 </script>
-<style scoped></style>
+
+<style scoped>
+h4 {
+  font-family: 'Roboto', sans-serif;
+  color: #484848;
+  font-weight: 700;
+}
+
+#add-category {
+  float: right;
+  font-weight: 500;
+}
+</style>

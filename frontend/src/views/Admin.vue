@@ -1,6 +1,7 @@
 <template>
+  <div class="adminPanel container">
+  <h2> Seller Page </h2>
 
-  <h2> Welcome back.. </h2>
   <router-link :to="{name: 'AdminCategory'}" >
     <button class="btn btn-primary btn-lg"> Admin Category</button>
   </router-link>
@@ -12,7 +13,7 @@
   <router-link :to="{name: 'AdminProduct'}" >
     <button class="btn btn-primary btn-lg"> Orders</button>
   </router-link>
-
+  </div>
 </template>
 
 <script>
@@ -39,8 +40,15 @@ export default {
 }
 </script>
 
-<style scoped>
-.btn {
-  margin-bottom: 20px;
+<style>
+.adminPanel{
+  display : flex;
+  flex-direction: column;
+  align-items: center;
+}
+.adminPanel button{
+  font-size: 20px;
+  width: fit-content;
+  margin: 10px 0;
 }
 </style>
