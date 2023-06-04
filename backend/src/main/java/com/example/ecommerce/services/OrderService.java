@@ -16,6 +16,7 @@ import com.example.ecommerce.repos.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import com.example.ecommerce.services.CartService;
 
 import jakarta.transaction.Transactional;
 import java.util.ArrayList;
@@ -96,6 +97,8 @@ public class OrderService {
     public void placeOrder(User user, String sessionId) {
         // first let get cart items for the user
         CartWrapper cartWrapper = cartService.listCartItems(user);
+
+        List<CartItemWrapper> cartItemWrapperList = cartWrapper.getCartItems();
 
         // create the order and save it
         Order newOrder = new Order();
