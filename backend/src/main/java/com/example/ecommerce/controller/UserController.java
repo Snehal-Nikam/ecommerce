@@ -1,13 +1,16 @@
 package com.example.ecommerce.controller;
 
 
-import com.example.ecommerce.model.Address;
-import com.example.ecommerce.model.Category;
+import com.example.ecommerce.exceptions.AuthenticationFailException;
+//import com.example.ecommerce.model.Address;
+//import com.example.ecommerce.model.Category;
 import com.example.ecommerce.model.User;
 import com.example.ecommerce.services.AuthenticationService;
 import com.example.ecommerce.utils.ResponseUtil;
 import com.example.ecommerce.wrappers.profile.AddressWrapper;
 import com.example.ecommerce.wrappers.profile.ProfileWrapper;
+import com.example.ecommerce.wrappers.profile.UpdatePasswordWrapper;
+import com.example.ecommerce.wrappers.profile.UserInfoWrapper;
 import com.example.ecommerce.wrappers.user.SignInWrapper;
 import com.example.ecommerce.wrappers.user.SignInResponseWrapper;
 import com.example.ecommerce.wrappers.user.SignupWrapper;
@@ -49,6 +52,42 @@ public class UserController {
         return new ResponseEntity<>(profile, HttpStatus.OK);
     }
 
+    @PostMapping("/profile/updateUser")
+    public ResponseEntity<ResponseUtil> updateUser(@RequestBody UserInfoWrapper userInfoWrapper,@RequestParam("token") String token){
+        authenticationService.authenticate(token);
+        User user = authenticationService.getUser(token);
+        try {
+            if(Objects.nonNull(user)){
+                return new ResponseEntity<>(userService.updateUser(userInfoWrapper,user), HttpStatus.OK);
+            }
+            else return new ResponseEntity<>(new ResponseUtil(false, "Something went wrong"), HttpStatus.NOT_FOUND);
+        }
+        catch(Exception e){
+            System.out.println(" Message "+ e.getMessage() +" Stack trace : "+ e.getStackTrace());
+            return new ResponseEntity<>(new ResponseUtil(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/profile/updatePassword")
+    public ResponseEntity<ResponseUtil> updateUserPassword(@RequestBody UpdatePasswordWrapper updatePasswordWrapper, @RequestParam("token") String token){
+        authenticationService.authenticate(token);
+        User user = authenticationService.getUser(token);
+        try{
+            if(Objects.isNull(user)){
+                throw  new AuthenticationFailException("Something wrong with the session or user");
+            }
+            else if(Objects.nonNull(user)){
+                return new ResponseEntity<>(userService.updatePassword(updatePasswordWrapper, user), HttpStatus.OK);
+            }
+            else return new ResponseEntity<>(new ResponseUtil(false, "Something went wrong"), HttpStatus.NOT_FOUND);
+        }
+        catch (Exception e){
+            System.out.println(" Message "+ e.getMessage() +" Stack trace : "+ e.getStackTrace());
+            return new ResponseEntity<>(new ResponseUtil(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+    }
+
     @PostMapping("/profile/updateAddress/{addressId}")
     public ResponseEntity<ResponseUtil> editAddress(@RequestBody AddressWrapper addressToUpdate, @PathVariable("addressId") Integer Id, @RequestParam("token") String token){
         authenticationService.authenticate(token);
@@ -63,7 +102,7 @@ public class UserController {
         }
         catch (Exception e){
             System.out.println(" Message "+ e.getMessage() +" Stack trace : "+ e.getStackTrace());
-            return new ResponseEntity<ResponseUtil>(new ResponseUtil(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseUtil(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
 
     }
@@ -78,7 +117,7 @@ public class UserController {
         }
         catch (Exception e){
             System.out.println(" Message "+ e.getMessage() +" Stack trace : "+ e.getStackTrace());
-            return new ResponseEntity<ResponseUtil>(new ResponseUtil(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(new ResponseUtil(false, e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
 

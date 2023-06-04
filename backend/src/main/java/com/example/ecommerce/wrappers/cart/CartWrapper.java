@@ -9,9 +9,9 @@ public class CartWrapper {
     public CartWrapper() {
     }
 
-    public List<CartItemWrapper> getCartItems() {
-        return cartItems;
-    }
+//    public List<CartItemWrapper> getCartItems() {
+//        return cartItems;
+//    }
 
     public void setCartItems(List<CartItemWrapper> cartItems) {
         this.cartItems = cartItems;

@@ -46,7 +46,7 @@
 const axios = require("axios");
 const alert = require("sweetalert");
 export default {
-  name : "EditAddress",
+  name : "AddAddress",
   props : ["baseURL"],
   data() {
     return {
