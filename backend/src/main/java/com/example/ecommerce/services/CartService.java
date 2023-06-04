@@ -25,6 +25,12 @@ public class CartService {
     @Autowired
     CartRepository cartRepository;
 
+    public CartService(){}
+
+    public CartService(CartRepository cartRepository) {
+        this.cartRepository = cartRepository;
+    }
+
     public void addToCart(AddToCartWrapper addToCartWrapper, User user) throws ProductNotExistsException {
 
         // validate if the product id is valid
@@ -79,6 +85,9 @@ public class CartService {
 
     }
 
+    public void deleteCartItems(int userId) {
+        cartRepository.deleteAll();
+    }
     public void deleteUserCartItems(User user) {
         cartRepository.deleteByUser(user);
     }

@@ -15,6 +15,12 @@ import Cart from "@/views/Cart.vue";
 import WishList from "@/views/product/WishList.vue";
 import MyProfile from "@/views/Profile/MyProfile.vue";
 import AddAddress from "@/views/Profile/AddAddress.vue";
+import PageNotFound from "@/views/PageNotFound.vue";
+import Checkout from "@/views/Checkout/Checkout.vue";
+import Success from "@/views/payment/Success.vue";
+import Failed from "@/views/payment/Failed.vue";
+import OrderDetails from "@/views/Orders/OrderDetails.vue";
+import Order from "@/views/Orders/Order.vue";
 
 const routes = [
   {
@@ -83,6 +89,12 @@ const routes = [
     name: 'ShowDetails',
     component: ShowDetails
   },
+  //Page Not found
+  {
+    path : '/:catchAll(.*)',
+    name : 'PageNotFound',
+    component : PageNotFound
+  },
   {
     path: '/signup',
     name: 'Signup',
@@ -110,15 +122,41 @@ const routes = [
     component: WishList
   },
   {
+    path : '/checkout',
+    name : 'Checkout',
+    component : Checkout
+  },
+  {
+    path : '/order',
+    name : 'Order',
+    component : Order
+  },
+  {
     path: '/myprofile',
     name: 'MyProfile',
     component: MyProfile
+  },
+  {
+    path: '/payment/success',
+    name: 'PaymentSuccess',
+    component: Success
+  },
+  {
+    path: '/payment/failed',
+    name: 'FailedPayment',
+    component: Failed
+  },
+  {
+    path:'/order/:id',
+    name:'OrderDetails',
+    component: OrderDetails
   },
   {
     path: '/addAddress',
     name: 'AddAddress',
     component: AddAddress
   }
+
 
 ]
 

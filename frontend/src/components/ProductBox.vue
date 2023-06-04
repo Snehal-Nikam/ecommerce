@@ -10,31 +10,56 @@
       <router-link :to="{name: 'ShowDetails', params: {id : product.id}}">
         <h5 class="card-title">{{product.productName}}</h5>
       </router-link>
-      <p class="card-text">
+      <p class="card-text">${{ product.price }}</p>
+      <p class="card-text font-italic">
         {{ product.description.substring(0, 65) }}...
       </p>
-      <router-link :to="{name: 'EditProduct', params: {id: product.id}}"
-                   v-show="$route.name == 'AdminProduct'">
-        <button class="btn btn-primary">Edit</button>
+      <router-link  id="edit-product" :to="{name: 'EditProduct', params: {id: product.id}}"
+                   v-show="$route.name == 'AdminProduct'">Edit
       </router-link>
     </div>
   </div>
 </template>
+
 <script>
 export default {
   name: "ProductBox",
-  props: ["product"]
-
-}
+  props: ["product"],
+  methods: {
+    showDetails() {
+      this.$router.push({
+        name: "ShowDetails",
+        params: { id: this.product.id },
+      });
+    },
+  },
+};
 </script>
+
 <style scoped>
-.card-img-top {
+.embed-responsive .card-img-top {
   object-fit: cover;
 }
+
 a {
   text-decoration: none;
 }
+
 .card-title {
   color: #484848;
+  font-size: 1.1rem;
+  font-weight: 400;
+}
+
+.card-title:hover {
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+#edit-product {
+  float: right;
 }
 </style>

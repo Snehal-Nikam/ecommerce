@@ -18,5 +18,4 @@ export default {
 </script>
 
 <style scoped>
-@import "~@fortawesome/fontawesome-free/css/all.css";
-</style>
+@import "~@fortawesome/fontawesome-free/css/all.css";</style>

@@ -30,8 +30,10 @@ export default {
       baseURL :"http://localhost:8090/",
       products :[],
       categories : [],
+      key: 0,
+      token: null,
       cartCount: 0
-    }
+    };
   },
   methods:{
     async fetchData() {
@@ -74,27 +76,6 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-
 html {
   overflow-y: scroll;
 }

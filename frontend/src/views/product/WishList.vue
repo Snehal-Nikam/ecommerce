@@ -6,7 +6,6 @@
       </div>
     </div>
     <div class="row">
-      {{ products }}
       <div v-for="product of products" :key="product.id" class="col-md-6 col-xl-4 col-12 pt-3 justify-content-around d-flex">
         <ProductBox :product="product"></ProductBox>
       </div>
@@ -44,3 +43,11 @@ export default {
 };
 
 </script>
+
+<style scoped>
+h4 {
+  font-family: 'Roboto', sans-serif;
+  color: #484848;
+  font-weight: 700;
+}
+</style>

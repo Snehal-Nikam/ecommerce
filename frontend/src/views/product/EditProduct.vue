@@ -7,7 +7,7 @@
     </div>
     <div class="row">
       <div class="col-3"></div>
-      <div class="col-6">
+      <div class="col-md-6 px-5 px-md-0">
         <form v-if="product">
           <div class="form-group">
             <label> Category</label>
@@ -87,3 +87,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+h4 {
+  font-family: 'Roboto', sans-serif;
+  color: #484848;
+  font-weight: 700;
+}
+
+</style>
