@@ -73,18 +73,20 @@ export default {
   methods:{
     cancelOrder(itemId) {
       console.log(itemId);
-      this.editorder.status = "Cancel";
-      this.editorder.id=itemId;
-      //console.log(this.baseURL);
-      axios
-          .post(`http://localhost:8090/order/update/${itemId}?token=${this.token}`,this.editorder)
-          .then((res) => {
-            if (res.status == 200) {
-              this.$router.go(0);
-            }
-            this.$emit('fetchData');
-          })
-          .catch((err) => console.log("err", err));
+      if(confirm("Do you really want to cancel this order?")){
+        this.editorder.status = "Cancel";
+        this.editorder.id=itemId;
+        //console.log(this.baseURL);
+        axios
+            .post(`http://localhost:8090/order/update/${itemId}?token=${this.token}`,this.editorder)
+            .then((res) => {
+              if (res.status == 200) {
+                this.$router.go(0);
+              }
+              this.$emit('fetchData');
+            })
+            .catch((err) => console.log("err", err));
+      }
     },
   },
   mounted() {

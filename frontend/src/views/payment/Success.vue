@@ -2,8 +2,7 @@
   <div class="text-center">
     <div class="spinner-border" role="status">
       <span class="sr-only">Loading...</span>
-      <h3>Payment Successful</h3>
-      {{baseURL}}
+      <h3>Payment Successful! Order Placed</h3>
     </div>
   </div>
 </template>
@@ -27,7 +26,7 @@ export default {
       await
       axios.post(this.baseURL+"order/add?token="+this.token+"&sessionId="+this.sessionId)
           .then(()=>{
-            router.push({name: "Order"});
+            router.push({name: "Home"});
           }).catch((error)=>{
         console.log(error);
       })
@@ -36,7 +35,7 @@ export default {
   mounted(){
     this.token = localStorage.getItem("token");
     this.sessionId = localStorage.getItem("sessionId");
-    this.saveOrder()
+    this.saveOrder();
   }
 }
 </script>

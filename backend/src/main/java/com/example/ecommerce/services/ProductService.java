@@ -22,6 +22,7 @@ public class ProductService {
     public Product getProductFromWrapper(ProductWrapper productWrapper, Category category) {
         Product product = new Product();
         product.setCategory(category);
+        product.setProductName(productWrapper.getProductName());
         product.setDescription(productWrapper.getDescription());
         product.setImgURL(productWrapper.getImgURL());
         product.setPrice(productWrapper.getPrice());
@@ -53,6 +54,7 @@ public class ProductService {
         productWrapper.setUnitsInStock(product.getUnitsInStock());
         productWrapper.setProductName(product.getProductName());
         productWrapper.setId(product.getId());
+        productWrapper.setProductName(product.getProductName());
         return productWrapper;
     }
 
