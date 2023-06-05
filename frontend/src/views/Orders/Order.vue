@@ -1,90 +1,170 @@
 <template>
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h4 class="pt-3">Your Orders</h4>
-      </div>
-    </div>
-    <!--        for each order display -->
-    <div v-for="order in orderList" :key="order.pid" class="row mt-2 pt-3 justify-content-around">
-      <div class="col-2"></div>
-      <div class="col-md-3 embed-responsive embed-responsive-16by9">
-        <!--                display image in left-->
-        <img v-bind:src="order.imageURL" class="w-100 card-img-top embed-responsive-item">
-      </div>
-      <div class="col-md-5 px-3">
-        <div class="card-block px-3">
-          <h6 class="card-title">
-            <router-link v-bind:to="'/order/'+order.id">Order No : {{order.id}}</router-link>
-          </h6>
-          <p class="mb-0">{{order.totalItems}} item<span v-if="order.totalItems > 1">s</span></p>
-          <p id="item-price" class="mb-0 font-weight-bold">Total Cost : $ {{order.totalCost}}</p>
-          <p id="item-total-price">Ordered on : {{order.orderdate}}</p>
-        </div>
-      </div>
-      <div class="col-2"></div>
-      <div class="col-12"><hr></div>
-    </div>
+  <div id="vieworders">
+    <Table v-if="orders" :config="config"/>
   </div>
+  <div>
+    <h1>User Orders</h1>
+  </div>
+  <div class="awesome-table">
+    <table align="center">
+      <thead>
+      <tr>
+        <th v-for="(obj,ind) in config" :key="ind">{{ obj.title }}</th>
+        <th> Order Status </th>
+        <th>  </th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="(row,index) in orders" :key="index">
+        <td v-for="(obj,ind) in config" :key="ind">
+          <span v-if="obj.type==='text'">{{row[obj.key]}}</span>
+          <span v-if="obj.type==='date'">{{new Date(row[obj.key]).toLocaleDateString()}}</span>
 
+        </td>
+        <td>
+
+          <span v-show="editRow!=index">{{row.status}} <a href="#" @click.prevent="startEditing(index)">
+          <i class="fa fa-pen" style="color: grey"></i></a></span>
+          <span v-show="editRow==index">
+            <select v-model="row.status" name="status" id="status">
+               <option value="Order Placed">Order Placed</option>
+               <option value="Shipped">Shipped</option>
+               <option value="Out For Delivery">Out For Delivery</option>
+               <option value="Delivered">Delivered</option>
+             </select>
+          </span>
+          <span v-show="editRow==index">
+            <button type="button" class="btn btn-primary btn-sm" style="margin: 10px;" @click="update(row)">Save</button>
+            <button type="button" class="btn btn-secondary btn-sm" @click="cancelEditing">Cancel</button>
+          </span>
+        </td>
+        <td>
+            <span class="m-3 form-row justify-content-center"><a href="#" @click="$router.push({name:'OrderDetails',params: {id: row.id}})" class="btn btn-light btn-sm border" >
+                View Details </a></span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <script>
-const axios = require('axios')
-export default {
+import axios from 'axios';
+import alert from "sweetalert";
+export default{
+  name: " OrderDetails",
+  token: null,
 
-  data() {
-    return {
-      token: null,
-      orderList : []
+  props: ["baseURL"],
+  data: () => ({
+    editRow: -1,
+    orders: undefined,
+    config:[
+      {
+        key:'id' ,
+        title: 'Order ID',
+        type: 'text'
+      },
+      {
+        key: 'userId',
+        title: 'User ID',
+        type: 'text'
+      },
+      {
+        key: 'userName',
+        title: 'User Name',
+        type: 'text'
+      },
+      {
+        key: 'userEmail',
+        title: 'User Email',
+        type: 'text'
+      },
+      {
+        key: 'totalPrice',
+        title: 'Price',
+        type: 'text'
+      }
+    ]
+  }),
+  methods:{
+    fetchOrders(){
+      axios
+          .get(`${this.baseURL}order/?token=${this.token}`)
+          .then((res) => {
+            // if (res.status == 200) {
+           this.orders = res.data[0];
+
+            // }
+          })
+          .catch((err) => console.log("err", err));
+    },
+    async update(row) {
+      this.editRow=-1;
+      let editOrder={
+        id: row.id,
+        status: row.status
+      }
+      await axios
+          .post(`${this.baseURL}order/update/${row.id}?token=${this.token}`, editOrder)
+          .then(() => {
+                this.fetchOrders();
+                alert({
+                  text: "Profile data has been updated successfully",
+                  icon: "success"
+                })
+              }).catch(err => {
+            console.log("error : " + err);
+          })
+    },
+    startEditing(index){
+      this.editRow = index;
+    },
+    cancelEditing(){
+      this.editRow = -1;
+      this.fetchOrders();
     }
   },
-  props:["baseURL"],
-  // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Order',
-  methods: {
-    // list of order histories
-    listOrders(){
-      axios.get(`${this.baseURL}order/?token=${this.token}`)
-          .then((response) => {
-                if(response.status==200){
-                  this.orders = response.data
-                  // for each order populate orderList
-                  this.orders.forEach((order) => {
-                    this.orderList.push({
-                      id: order.id,
-                      totalCost: order.totalPrice,
-                      // get short date
-                      orderdate: order.createdDate.substring(0,10),
-                      // get image of the first orderItem of the order
-                      imageURL: order.orderItems[0].product.imageURL,
-                      // get total items
-                      totalItems: order.orderItems.length
-                    })
-                  })
-                }
-              },
-              (error)=>{
-                console.log(error)
-              });
-    },
-  },
-  mounted() {
+  mounted(){
     this.token = localStorage.getItem("token");
-    this.listOrders();
-  },
-};
+    this.fetchOrders();
+
+  }
+}
 
 </script>
+<style lang="scss">
+.awesome-table {
+  border: 1px solid #999;
+  border-radius: 7px;
+  color: #333;
+  width: 100%;
 
-<style scoped>
-h4, h5 {
-  font-family: 'Roboto', sans-serif;
-  color: #484848;
-  font-weight: 700;
+  figure{
+    img{
+      border: 1px solid #bbb;
+
+      overflow: hidden;
+    }
+  }
+
+
+  table{
+    border-collapse: collapse;
+
+    th{
+      background: #ccc;
+      padding: 10px 5px;
+      position: sticky;
+      top: 0;
+      text-align: left;
+      border-bottom: 1px solid #999;
+    }
+    td{
+      padding: 5px 5px;
+      text-align: left;
+    }
+  }
 }
 
-.embed-responsive .card-img-top {
-  object-fit: cover;
-}
 </style>

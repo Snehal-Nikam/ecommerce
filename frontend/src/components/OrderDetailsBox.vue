@@ -1,16 +1,17 @@
 <template>
-  <div class="card border border-primary mb-4 shadow-0">
-    <div class="card-body pb-0">
+  <div class="card border border-primary ">
+    <div class="card-body">
       <header class="d-lg-flex">
         <div class="flex-grow-1">
-          <h6 class="mb-0">Order ID: 8924 <i class="dot"></i>
-            <span class="text-success"> Shipped</span>
-          </h6>
-          <span class="text-muted">Date: 16 December 2022</span>
+          <h6 class="mb-0">Order ID: {{ order.id }} <i class="dot"></i></h6>
+          <span class="text-success"> {{ order.status }}</span> <br/>
+          <span class="text-muted">Date: {{ order.createdDate.split("T")[0]}} </span>
         </div>
-        <div>
-          <a href="#" class="btn btn-sm btn-outline-danger">Cancel order</a>
-          <a href="#" class="btn btn-sm btn-primary shadow-0">Track order</a>
+        <div style="margin: 10px; position: absolute;
+right: 10px;
+top: 10px;">
+          <a v-show="order.status!='Cancel'" href="#" class="btn btn-sm btn-outline-danger" style="margin: 10px;" @click="cancelOrder(order.id)">Cancel order</a>
+<!--          <a href="#" class="btn btn-sm btn-primary shadow-0">Track order</a>-->
         </div>
       </header>
       <hr />
@@ -55,10 +56,42 @@
 
 <script>
 import OrderItemBox from "@/components/OrderItemBox.vue";
+import axios from "axios";
 export default {
   name: "OrderDetailsBox",
   components: {OrderItemBox},
-  props: ["order"]
+  props: ["order"],
+  data(){
+    return {
+      token: null,
+      editorder: {
+        status: '',
+        id: '',
+      },
+    };
+  },
+  methods:{
+    cancelOrder(itemId) {
+      console.log(itemId);
+      if(confirm("Do you really want to cancel this order?")){
+        this.editorder.status = "Cancel";
+        this.editorder.id=itemId;
+        //console.log(this.baseURL);
+        axios
+            .post(`http://localhost:8090/order/update/${itemId}?token=${this.token}`,this.editorder)
+            .then((res) => {
+              if (res.status == 200) {
+                this.$router.go(0);
+              }
+              this.$emit('fetchData');
+            })
+            .catch((err) => console.log("err", err));
+      }
+    },
+  },
+  mounted() {
+    this.token = localStorage.getItem("token");
+  }
 }
 </script>
 

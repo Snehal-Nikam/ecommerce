@@ -1,6 +1,7 @@
 package com.example.ecommerce.wrappers.profile;
 
 import com.example.ecommerce.model.Address;
+import com.example.ecommerce.model.Order;
 
 import java.util.List;
 
@@ -11,7 +12,9 @@ public class ProfileWrapper {
     private String phone;
     private List<Address> addresses;
 
-    //TODO : ORDER
+    private List<Order> orders;
+
+
     public String getFirstName() {
         return firstName;
     }
@@ -50,5 +53,13 @@ public class ProfileWrapper {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

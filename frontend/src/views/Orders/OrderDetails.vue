@@ -9,7 +9,7 @@
     <div v-for="(orderItem, index) in orderItems" :key="index" class="row mt-2 pt-3 justify-content-around">
       <div class="col-1"></div>
       <div class="col-md-3 embed-responsive embed-responsive-16by9">
-        <img :src="orderItem.product.imageURL" class="w-100 card-img-top embed-responsive-item">
+        <img :src="orderItem.product.imgURL" class="w-100 card-img-top embed-responsive-item">
         <hr/>
       </div>
 

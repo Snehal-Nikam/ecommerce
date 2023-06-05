@@ -26,7 +26,7 @@
           </div>
           <div class="form-group">
             <label>Image Url</label>
-            <input type="text"  v-model="imageURL" class="form-control" required>
+            <input type="text"  v-model="imgURL" class="form-control" required>
           </div>
           <div class="form-group">
             <label>Price</label>
@@ -64,7 +64,7 @@ export default {
       const newProduct = {
         categoryId: this.categoryId,
         description: this.description,
-        name: this.name,
+        productName: this.name,
         imgURL: this.imgURL,
         price: this.price,
         active: this.active,

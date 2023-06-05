@@ -10,7 +10,7 @@
     <button class="btn btn-primary btn-lg"> Admin Product</button>
   </router-link>
   <br />
-  <router-link :to="{name: 'AdminProduct'}" >
+  <router-link :to="{name: 'AdminOrder'}" >
     <button class="btn btn-primary btn-lg"> Orders</button>
   </router-link>
   </div>

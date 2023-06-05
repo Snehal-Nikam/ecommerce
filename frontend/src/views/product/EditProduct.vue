@@ -20,7 +20,7 @@
           </div>
           <div class="form-group">
             <label>Name</label>
-            <input type="text" class="form-control" v-model="product.name" required/>
+            <input type="text" class="form-control" v-model="product.productName" required/>
           </div>
           <div class="form-group">
             <label>Description</label>
@@ -65,7 +65,7 @@ export default {
   methods: {
     async editProduct() {
       console.log('product', this.product)
-      await axios.post(`${this.baseURL}product/update/${this.id}`,
+      await axios.post(`${this.baseURL}product/edit/${this.id}`,
           this.product)
           .then(() => {
             this.$emit("fetchData");
