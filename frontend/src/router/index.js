@@ -127,8 +127,8 @@ const routes = [
     component : Checkout
   },
   {
-    path : '/order',
-    name : 'Order',
+    path : '/admin/order',
+    name : 'AdminOrder',
     component : Order
   },
   {
@@ -147,7 +147,7 @@ const routes = [
     component: Failed
   },
   {
-    path:'/order/:id',
+    path:'/admin/order/:id',
     name:'OrderDetails',
     component: OrderDetails
   },

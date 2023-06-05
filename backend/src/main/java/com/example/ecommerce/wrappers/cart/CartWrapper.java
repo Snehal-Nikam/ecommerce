@@ -18,7 +18,7 @@ public class CartWrapper {
         this.cartItems = cartItems;
     }
 
-    public List<CartItemWrapper> getcartItems() {
+    public List<CartItemWrapper> getCartItems() {
         return cartItems;
     }
 

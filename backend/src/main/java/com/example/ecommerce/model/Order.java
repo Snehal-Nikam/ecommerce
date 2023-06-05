@@ -15,7 +15,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-
     @Column(name = "created_date")
     private Date createdDate;
 
@@ -32,7 +31,6 @@ public class Order {
     private List<OrderItem> orderItems;
 
     @ManyToOne()
-    @JsonIgnore
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 

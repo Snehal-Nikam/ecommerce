@@ -3,12 +3,14 @@
     <div class="spinner-border" role="status">
       <span class="sr-only">Loading...</span>
       <h3>Payment Successful</h3>
+      {{baseURL}}
     </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import router from "@/router";
 export default {
   name:'PaymentSuccess',
   props:["baseURL"],
@@ -19,10 +21,13 @@ export default {
     }
   },
   methods:{
-    saveOrder() {
-      axios.post(this.baseURL+"order/add/?token="+this.token+"&sessionId="+this.sessionId)
+    async saveOrder() {
+      console.log("session "+ this.sessionId);
+
+      await
+      axios.post(this.baseURL+"order/add?token="+this.token+"&sessionId="+this.sessionId)
           .then(()=>{
-            window.location.href = '/order'
+            router.push({name: "Order"});
           }).catch((error)=>{
         console.log(error);
       })

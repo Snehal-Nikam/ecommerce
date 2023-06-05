@@ -4,6 +4,7 @@ import com.example.ecommerce.exceptions.AddressNotFoundException;
 import com.example.ecommerce.exceptions.ProductNotExistsException;
 import com.example.ecommerce.model.*;
 import com.example.ecommerce.repos.AddressRepository;
+import com.example.ecommerce.repos.OrderRepository;
 import com.example.ecommerce.utils.ResponseUtil;
 import com.example.ecommerce.wrappers.product.ProductWrapper;
 import com.example.ecommerce.wrappers.profile.AddressWrapper;
@@ -39,6 +40,9 @@ public class UserService {
 
     @Autowired
     AddressRepository addressRepository;
+
+    @Autowired
+    private OrderService orderService;
 
     @Transactional
 
@@ -109,6 +113,7 @@ public class UserService {
 
     public ProfileWrapper getUserProfile(User user){
         List<Address> lstAddress = addressRepository.findAllByUser(user);
+        List<Order> lstOrder = orderService.listOrders(user);
 //        final List<AddressWrapper> address = new ArrayList<>();
 //        for (Address a:lstAddress) {
 //            address.add(createAddressWrapper(a));
@@ -119,6 +124,7 @@ public class UserService {
         profileData.setEmail(user.getEmail());
         profileData.setAddresses(lstAddress);
         profileData.setPhone(user.getPhone());
+        profileData.setOrders(lstOrder);
         //To do : Order
         return profileData;
     }

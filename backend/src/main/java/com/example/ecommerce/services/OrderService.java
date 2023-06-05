@@ -127,6 +127,10 @@ public class OrderService {
         return orderRepository.findAllByUserOrderByCreatedDateDesc(user);
     }
 
+    public List<Order> listOrders() {
+        return orderRepository.findAll();
+    }
+
 
     public Order getOrder(Integer orderId) throws OrderNotFoundException {
         Optional<Order> order = orderRepository.findById(orderId);
